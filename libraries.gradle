@@ -1,0 +1,14 @@
+ext {
+    versions = [
+    aspectj:                '1.7.2',
+    tops_front:				'1.2.4.5.SNAPSHOT'
+    ]
+
+    libraries = [
+    // cglib
+    cglib_asm:              'cglib:cglib-asm:1.0',
+    cglib_nodep:            'cglib:cglib-nodep:2.1_3',
+	zkclient:				'com.github.adyliu:zkclient:2.1.1',
+    junit:                  'junit:junit:4.11',
+    ]
+}
