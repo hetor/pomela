@@ -1,5 +1,3 @@
-group = 'com.pomela'
-
 dependencies {
 	compile libraries.rabbitmq
 }
