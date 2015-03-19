@@ -1,3 +1,4 @@
 apply from: 'pomela-common.settings.gradle'
 apply from: 'pomela-amqp.settings.gradle'
 apply from: 'pomela-framework.settings.gradle'
+apply from: 'pomela-springmvc.settings.gradle'
