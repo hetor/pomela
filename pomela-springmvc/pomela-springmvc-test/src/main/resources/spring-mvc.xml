@@ -64,9 +64,61 @@
     </bean>
 
 
+
+
+    <!-- 配置MultipartResolver -->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+        <!--<property name="maxUploadSize"><value>100000</value></property>-->
+    <!--</bean>-->
+
+    <!-- 配置国际化LocaleResolver -->
+        <!-- 基于URL参数的国际化配置 eg:<a href="?locale=zh_CN"> -->
+    <bean id="urlLocaleResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+        <!-- 基于session的国际化配置 检验用户会话中预置的属性来解析区域 -->
+    <bean id="sessionLocaleResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+        <!-- 基于Cookie的国际化配置 通过浏览器的cookie设置取得Locale对象 -->
+    <bean id="cookieLocaleResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+
+    <!-- 配置主题资源 ThemeResolver -->
+    <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+        <property name="basenamePrefix" value="com.pomela.springmvc.test.mvc" />
+    </bean>
+
+    <!--拦截器 AbstractHandlerMapping-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.pomela.springmvc.test.mvc.interceptors.MyInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean id="yourInterceptor" class="com.pomela.springmvc.test.mvc.interceptors.YourInterceptor" />
+
+    <bean id="yourMapperInterceptor" class="org.springframework.web.servlet.handler.MappedInterceptor">
+        <constructor-arg name="includePatterns" value="/**"></constructor-arg>
+        <constructor-arg name="interceptor" ref="yourInterceptor"></constructor-arg>
+    </bean>
+
+    <!--配置HandlerMappings 默认BeanNameUrlHandlerMapping和DefaultAnnotationHandlerMapping-->
+    <bean id="hanlderMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <bean class="com.pomela.springmvc.test.mvc.interceptors.SimpleInterceptor" />
+                <ref bean="yourMapperInterceptor" />
+            </list>
+        </property>
+    </bean>
+    <!-- 配置HandlerAdapters 默认HttpRequestHandlerAdapter、SimpleControllerHandlerAdapter、AnnotationMethodHandlerAdapter -->
+    <!-- 配置HandlerExceptionResolvers -->
+    <!-- 配置RequestToViewNameTranslator -->
+
+    <!-- 配置ViewResolvers -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!--<property name="viewClass" value="com.pomela.springmvc.test.mvc.MyFreeMarkerkView" />-->
         <property name="contentType" value="text/html; charset=utf-8" />
         <property name="requestContextAttribute" value="req" />
         <property name="suffix" value=".ftl" />
     </bean>
+
+
 </beans>
