@@ -1,0 +1,8 @@
+include 'pomela-java:pomela-java-concurrent'
+include 'pomela-java:pomela-java-common'
+include 'pomela-java:pomela-java-jvm'
+include 'pomela-java:pomela-java-collections'
+include 'pomela-java:pomela-java-tangerine'
+include 'pomela-java:pomela-java-io'
+
+
