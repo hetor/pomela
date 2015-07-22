@@ -1,0 +1,17 @@
+dependencies {
+    compile libraries.spring_test
+    compile libraries.spring_web
+    compile libraries.spring_webmvc
+    compile libraries.spring_context
+    compile libraries.spring_context_support
+    compile libraries.spring_beans
+    compile libraries.spring_core
+    compile libraries.servlet_api
+    compile libraries.hamcrest_core
+    compile libraries.mockito_core
+    compile libraries.commons_lang3
+    compile libraries.commons_logging
+    compile libraries.freemarker
+    compile libraries.spring_data_redis
+    compile libraries.jedis
+}

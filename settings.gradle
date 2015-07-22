@@ -4,4 +4,5 @@ apply from: 'pomela-framework.settings.gradle'
 apply from: 'pomela-springmvc.settings.gradle'
 apply from: 'pomela-java.settings.gradle'
 apply from: 'pomela-jmx.settings.gradle'
+apply from: 'pomela-cache.settings.gradle'
 
