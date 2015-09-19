@@ -14,11 +14,16 @@ allprojects {
     targetCompatibility = '1.8'
 
     repositories {
-        maven { url 'http://192.168.160.187:8081/nexus/content/groups/public' }
+        //maven { url 'http://192.168.160.187:8081/nexus/content/groups/public' }
+	maven { url 'http://mirrors.ibiblio.org/maven2' }
+	maven { url 'http://mirrors.ibiblio.org/pub/mirrors/maven2' }
+	maven { url 'http://repo1.maven.org/maven2' }
+	maven { url 'http://maven.springframework.org/release' }
+	maven { url '' }
         maven { url 'https://maven.alfresco.com/nexus/content/groups/public' }
-	    maven { url 'https://raw.github.com/dianping/cat/mvn-repo' }
+	maven { url 'https://raw.github.com/dianping/cat/mvn-repo' }
         mavenCentral()
-		mavenLocal()
+	mavenLocal()
     }
 
     eclipse {
@@ -50,7 +55,7 @@ allprojects {
         }
     }
 
-    tasks.withType(Compile) { options.encoding = 'UTF-8' }
+    tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 
     eclipseProject.doLast {
         if (!new File("$projectDir/src").exists() && !new File("$projectDir/gen-java").exists()) {
@@ -147,20 +152,20 @@ allprojects {
     }
 
     // 编译JAVA文件时采用 UTF-8
-    tasks.withType(Compile) {
+    tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
     }
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                repository(url: 'http://192.168.160.187:8081/nexus/content/repositories/releases') {
-                    authentication(userName: mavenUser, password: mavenPassword)
-                }
-                snapshotRepository(url: 'http://192.168.160.187:8081/nexus/content/repositories/snapshots') {
-                    authentication(userName: mavenUser, password: mavenPassword)
-                }
-            }
-        }
-    }
+    //uploadArchives {
+    //    repositories {
+    //        mavenDeployer {
+    //            repository(url: 'http://192.168.160.187:8081/nexus/content/repositories/releases') {
+    //                authentication(userName: mavenUser, password: mavenPassword)
+    //            }
+    //            snapshotRepository(url: 'http://192.168.160.187:8081/nexus/content/repositories/snapshots') {
+    //                authentication(userName: mavenUser, password: mavenPassword)
+    //            }
+    //        }
+    //    }
+    //}
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 }
