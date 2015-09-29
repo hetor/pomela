@@ -2,4 +2,5 @@ dependencies {
     compile libraries.commons_beanutils
     compile libraries.commons_lang3
     compile libraries.spring_beans
+    compile libraries.google_guava
 }
