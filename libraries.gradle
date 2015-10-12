@@ -10,7 +10,10 @@ ext {
 
 
     libraries = [
-    // commons:
+
+    //alibaba
+    alibaba_fastjson:       'com.alibaba:fastjson:1.2.7',
+    //commons
     commons_beanutils:      'commons-beanutils:commons-beanutils:1.8.3',
     commons_cli:            'commons-cli:commons-cli:1.2',
     commons_collections:    'commons-collections:commons-collections:3.2.1',
@@ -38,12 +41,21 @@ ext {
 
     // google
     google_guava:           'com.google.guava:guava:18.0',
+    google_gson:            'com.google.code.gson:gson:2.4',
 
     //zookeeper
     zkclient:               'com.github.adyliu:zkclient:2.1.1',
 
     //mx4j
     mx4j_tools:             'mx4j:mx4j-tools:3.0.1',
+
+    //jackson
+    jackson_core:           'com.fasterxml.jackson.core:jackson-core:2.6.1',
+    jackson_annotations:    'com.fasterxml.jackson.core:jackson-annotations:2.6.1',
+    jackson_databind:       'com.fasterxml.jackson.core:jackson-databind:2.6.1',
+
+    //json-lib
+    json_lib:               'net.sf.json-lib:json-lib:2.4',
 
     //junit
     junit:                  'junit:junit:4.11',

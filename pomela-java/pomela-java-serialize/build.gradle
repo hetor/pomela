@@ -1,0 +1,8 @@
+dependencies {
+    compile libraries.alibaba_fastjson
+    compile libraries.google_gson
+    compile libraries.jackson_annotations
+    compile libraries.jackson_databind
+    compile libraries.jackson_core
+    compile libraries.json_lib
+}
