@@ -15,15 +15,14 @@ allprojects {
 
     repositories {
         //maven { url 'http://192.168.160.187:8081/nexus/content/groups/public' }
-	maven { url 'http://mirrors.ibiblio.org/maven2' }
-	maven { url 'http://mirrors.ibiblio.org/pub/mirrors/maven2' }
-	maven { url 'http://repo1.maven.org/maven2' }
-	maven { url 'http://maven.springframework.org/release' }
-	maven { url '' }
+        maven { url 'http://mirrors.ibiblio.org/maven2' }
+        maven { url 'http://mirrors.ibiblio.org/pub/mirrors/maven2' }
+        maven { url 'http://repo1.maven.org/maven2' }
+        maven { url 'http://maven.springframework.org/release' }
         maven { url 'https://maven.alfresco.com/nexus/content/groups/public' }
-	maven { url 'https://raw.github.com/dianping/cat/mvn-repo' }
+        maven { url 'https://raw.github.com/dianping/cat/mvn-repo' }
         mavenCentral()
-	mavenLocal()
+        mavenLocal()
     }
 
     eclipse {

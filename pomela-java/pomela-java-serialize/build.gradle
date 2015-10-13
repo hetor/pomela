@@ -5,4 +5,6 @@ dependencies {
     compile libraries.jackson_databind
     compile libraries.jackson_core
     compile libraries.json_lib
+
+    compile project(':pomela-java:pomela-java-common')
 }

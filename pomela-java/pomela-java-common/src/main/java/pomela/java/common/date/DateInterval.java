@@ -1,4 +1,4 @@
-package _java_._common_.enum_.common;
+package pomela.java.common.date;
 
 public enum DateInterval {
 	

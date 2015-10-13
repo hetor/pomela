@@ -48,13 +48,13 @@ public class GuavaCollectionsAnalyzer implements APIAnalyzer {
 		// inverse£º[1 => {"a","b"}, 2 => {"c"}]
 //		Multimap<Integer, String> inverse = Multimaps.invertFrom(multimap, HashMultimap<Integer, String>.create());
 
-		ListMultimap<String, Integer> myMultimap = Multimaps.newListMultimap(
-				Maps.<String, Collection>newTreeMap(),
-				new Supplier<LinkedList>() {
-					public LinkedList get() {
-						return Lists.newLinkedList();
-					}
-				});
+//		ListMultimap<String, Integer> myMultimap = Multimaps.newListMultimap(
+//				Maps.<String, Collection>newTreeMap(),
+//				new Supplier<LinkedList>() {
+//					public LinkedList get() {
+//						return Lists.newLinkedList();
+//					}
+//				});
 
 
 		/**
