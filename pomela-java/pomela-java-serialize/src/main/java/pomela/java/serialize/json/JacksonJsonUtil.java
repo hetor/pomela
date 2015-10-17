@@ -5,16 +5,15 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  * Created by tao.he on 2015/10/12.
+ *
+ * ï¿½Ş¸ï¿½Ê±ï¿½ï¿½Ğ¡ï¿½ï¿½ObjectMapperï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½â£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ê±ï¿½ï¿½Ê¹ï¿½ï¿½ObjectMapperï¿½ï¿½
  */
 public class JacksonJsonUtil {
 
@@ -34,8 +33,8 @@ public class JacksonJsonUtil {
 	 * and only then use it (from any number of threads), usage will be
 	 * thread-safe without additional synchronization.
 	 */
-	private static final ObjectMapper objectMapper = new ObjectMapper();
-	private static final JsonFactory jsonFactory = new JsonFactory();
+	private static final ObjectMapper _ObjectMapper = new ObjectMapper();
+//	private static final JsonFactory jsonFactory = new JsonFactory();
 
 	/**
 	 * ObjectReader and ObjectWriter instances are immutable and thread-safe:
@@ -44,60 +43,63 @@ public class JacksonJsonUtil {
 	 * methods to create NEW INSTANCES (existing one is not changed). This
 	 * allows complete thread-safe use at any point in life cycle.
 	 */
-	private static final ObjectReader objectReader = objectMapper.reader();
-	private static final ObjectWriter objectWriter = objectMapper.writer();
+	private static final ObjectReader _ObjectReader = _ObjectMapper.reader();
+	private static final ObjectWriter _ObjectWriter = _ObjectMapper.writer();
+
 
 	/**
-	 * jsonString×ª ¶ÔÏó
+	 * jsonString×ª ï¿½ï¿½ï¿½ï¿½
 	 *
 	 * @param jsonStr
-	 *            jsonÊı¾İ
+	 *            jsonï¿½ï¿½ï¿½ï¿½
 	 * @param pojoClass
-	 *            ×ªÒåºóµÄclass
+	 *            ×ªï¿½ï¿½ï¿½ï¿½class
 	 * @param <T>
 	 *            class
-	 * @return ÁĞ±í
+	 * @return ï¿½Ğ±ï¿½
 	 */
 	public static <T> T fromJson(String jsonStr, final Class<T> pojoClass) {
 		try {
-			return objectReader.forType(pojoClass).readValue(jsonStr);
+			return _ObjectReader.forType(pojoClass).readValue(jsonStr);
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
 		}
 	}
 
 	/**
-	 * jsonString×ª ¶ÔÏó
+	 * jsonString×ª ï¿½ï¿½ï¿½ï¿½
+	 *
+	 * NOTE:Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿Ú»áµ¼ï¿½ï¿½Òµï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jacksonï¿½ï¿½API
 	 *
 	 * @param jsonStr
-	 *            jsonÊı¾İ
+	 *            jsonï¿½ï¿½ï¿½ï¿½
 	 * @param typeRef
 	 *            TypeReference
 	 * @param <T>
 	 *            class
-	 * @return ÁĞ±í
+	 * @return ï¿½Ğ±ï¿½
 	 */
 	public static <T> T fromJson(String jsonStr, TypeReference<T> typeRef) {
 		try {
-			return objectReader.forType(typeRef).readValue(jsonStr);
+			return _ObjectReader.forType(typeRef).readValue(jsonStr);
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
 		}
 	}
 
 	/**
-	 * ´ÓFileReaderÖĞµÄÊı¾İ·´ĞòÁĞ»¯Îª¶ÔÏó
+	 * ï¿½ï¿½FileReaderï¿½Ğµï¿½ï¿½ï¿½ï¿½İ·ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½Îªï¿½ï¿½ï¿½ï¿½
 	 *
 	 * @param fr
 	 *            FileReader
 	 * @param pojoClass
-	 *            ĞèÒª·´ĞòÁĞ»¯µÄÀàĞÍ
+	 *            ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param <T>
 	 * @return
 	 */
-	public static <T> T fromJson(FileReader fr, Class<T> pojoClass) {
+	public static <T> T fromJson(FileReader fr, final Class<T> pojoClass) {
 		try {
-			return objectReader.forType(pojoClass).readValue(fr);
+			return _ObjectReader.forType(pojoClass).readValue(fr);
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
 		}
@@ -107,12 +109,12 @@ public class JacksonJsonUtil {
 	 * jsonString×ª list
 	 *
 	 * @param jsonStr
-	 *            jsonÊı¾İ
+	 *            jsonï¿½ï¿½ï¿½ï¿½
 	 * @param pojoClass
-	 *            ×ªÒåºóµÄclass
+	 *            ×ªï¿½ï¿½ï¿½ï¿½class
 	 * @param <T>
 	 *            class
-	 * @return ÁĞ±í
+	 * @return ï¿½Ğ±ï¿½
 	 */
 	public static <T> List<T> fromJson2List(String jsonStr, final Class<T> pojoClass) {
 		return fromJson(jsonStr, new TypeReference<List<T>>() {
@@ -139,39 +141,75 @@ public class JacksonJsonUtil {
 	}
 
 	/**
-	 * ¶ÔÏó×ªjson
+	 * jsonString×ªmap
 	 *
-	 * @param javaBean
-	 *            ¶ÔÏó
-	 * @return jsonµÄ×Ö·û´®
+	 * jacksonÄ¬ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½LinkedHashMapï¿½ï¿½ï¿½ï¿½Ö¤Ë³ï¿½ï¿½
+	 *
+	 * @param jsonStr
+	 *            jsonï¿½ï¿½ï¿½ï¿½
+	 * @param kClass
+	 *            keyï¿½ï¿½class
+	 * @param vClass
+	 *            valueï¿½ï¿½class
+	 * @param <K>
+	 *            class
+	 * @param <V>
+	 *            class
+	 * @return ï¿½Ğ±ï¿½
 	 */
-	public static String getJsonString(Object javaBean) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.writeValueAsString(javaBean);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
+	public static <K, V> Map<K, V> fromJson2Map(String jsonStr, final Class<K> kClass, final Class<V> vClass) {
+		return fromJson(jsonStr, new TypeReference<Map<K, V>>() {
+			@Override
+			public Type getType() {
+				return new ParameterizedType() {
+					@Override
+					public Type[] getActualTypeArguments() {
+						return new Type[]{kClass, vClass};
+					}
+
+					@Override
+					public Type getRawType() {
+						return Map.class;
+					}
+
+					@Override
+					public Type getOwnerType() {
+						return null;
+					}
+				};
+			}
+		});
+	}
+
+
+	/**
+	 *
+	 * @param o
+	 *            ï¿½ï¿½Òªï¿½ï¿½ï¿½Ğ»ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
+	 * @return
+	 */
+	public static String toJson(Object o) {
+		return toJson(o, false);
 	}
 
 	/**
-	 * ½«¶ÔÏó×ª»¯Îªjson
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªjson
 	 *
-	 * @param pojo
-	 *            ĞèÒªĞòÁĞ»¯µÄ¶ÔÏó
+	 * @param o
+	 *            ï¿½ï¿½Òªï¿½ï¿½ï¿½Ğ»ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
 	 * @param prettyPrint
-	 *            ÊÇ·ñ´òÓ¡ÓÅ»¯£¬¼´»»ĞĞ
+	 *            ï¿½Ç·ï¿½ï¿½Ó¡ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @return
 	 */
-	public static String toJson(Object pojo, boolean prettyPrint) {
+	public static String toJson(Object o, boolean prettyPrint) {
 		try {
 			if (prettyPrint) {
-				return objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+				return _ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
 						.withDefaultPrettyPrinter()
-						.writeValueAsString(pojo);
+						.writeValueAsString(o);
 			} else {
-				return objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
-						.writeValueAsString(pojo);
+				return _ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+						.writeValueAsString(o);
 			}
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
@@ -179,34 +217,24 @@ public class JacksonJsonUtil {
 	}
 
 	/**
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½FileWriter
 	 *
-	 * @param pojo
-	 *            ĞèÒªĞòÁĞ»¯µÄ¶ÔÏó
-	 * @return
-	 */
-	public static String toJson(Object pojo) {
-		return toJson(pojo, false);
-	}
-
-	/**
-	 * ½«¶ÔÏóĞòÁĞ»¯£¬²¢Êä³öµ½FileWriter
-	 *
-	 * @param pojo
-	 *            ĞèÒªĞòÁĞ»¯µÄ¶ÔÏó
+	 * @param o
+	 *            ï¿½ï¿½Òªï¿½ï¿½ï¿½Ğ»ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
 	 * @param fw
-	 *            ĞèÒªÊä³öµÄFileWriter
+	 *            ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½FileWriter
 	 * @param prettyPrint
-	 *            ÊÇ·ñ´òÓ¡ÓÅ»¯£¬¼´»»ĞĞ
+	 *            ï¿½Ç·ï¿½ï¿½Ó¡ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
-	public static void toJson(Object pojo, FileWriter fw, boolean prettyPrint) {
+	public static void toJson(Object o, FileWriter fw, boolean prettyPrint) {
 		try {
 			if (prettyPrint) {
-				objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+				_ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
 						.withDefaultPrettyPrinter()
-						.writeValue(fw, pojo);
+						.writeValue(fw, o);
 			} else {
-				objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
-						.writeValue(fw, pojo);
+				_ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+						.writeValue(fw, o);
 			}
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
@@ -214,64 +242,20 @@ public class JacksonJsonUtil {
 	}
 
 	/**
-	 * @param jsonString
+	 * è‡ªå®šä¹‰åºåˆ—åŒ–
+	 * @param o
+	 * @param js
 	 * @return
 	 */
-	public static <K, V> HashMap<K, V> getMap(String jsonString) {
-		ObjectMapper mapper = new ObjectMapper();
+	public static String toJson(Object o, JsonSerializer js) {
 		try {
-			return mapper.readValue(jsonString, HashMap.class);
-		} catch (Exception e) {
+			ObjectMapper om = new ObjectMapper();
+			SimpleModule module = new SimpleModule();
+			module.addSerializer(o.getClass(), js);
+			om.registerModule(module);
+			return om.writeValueAsString(o);
+		} catch (Throwable th) {
+			throw new RuntimeException(th);
 		}
-		return null;
-	}
-
-	/*
-	 * ½«jsonString×ª³Émap
-	 */
-	/*
-	 * public static Map stringToMap(String jsonString) throws JSONException {
-	 * JSONObject jsonObject = new JSONObject(jsonString); Map result = new
-	 * HashMap(); Iterator iterator = jsonObject.keys(); String key = null;
-	 * String value = null; while (iterator.hasNext()) { key = (String)
-	 * iterator.next(); value = jsonObject.getString(key); result.put(key,
-	 * value); } return result; }
-	 */
-
-	// public static String mapToJson(Map<String, Object> map) {
-	// ObjectMapper objectMapper = new ObjectMapper();
-	// String result = "";
-	// JSON.toJSONString(result);
-	// //objectMapper.writeValue(result, map);
-	// }
-
-	public static void writeEntity2Json(Object object) throws IOException {
-		objectMapper.writeValue(new File("D:\\developSoft\\aaadowload\\testjson1\\lib\\aa.txt"), object);
-		objectMapper.writeValue(System.out, object);
-
-	}
-
-	// public static <T> List<T> fromJSON2List(String json, Class<T> clazz) {
-	// @SuppressWarnings("unchecked")
-	// List<LinkedHashMap<String, Object>> list = fromJson(json, List.class);
-	// List<T> retList = new ArrayList<T>();
-	// for (LinkedHashMap<String, Object> flightItem : list) {
-	// String str = toStr(flightItem);
-	// T item = fromJson(str, clazz);
-	// retList.add(item);
-	// }
-	// return retList;
-	// }
-
-	private static String toStr(LinkedHashMap<String, Object> flightItem) {
-		StringBuffer sb = new StringBuffer("{");
-		Set<String> set = flightItem.keySet();
-		for (String string : set) {
-			sb.append("\"" + string + "\":");
-			sb.append("\"" + flightItem.get(string) + "\",");
-		}
-		String str = sb.toString().substring(0, sb.length() - 1);
-		str += "}";
-		return str;
 	}
 }

@@ -1,5 +1,7 @@
 package pomela.java.common.entities;
 
+import java.util.Date;
+
 /**
  * Created by tao.he on 2015/9/30.
  */
@@ -7,7 +9,7 @@ public class Order {
 	private String outId;
 	private String title;
 	private String userId;
-	private Long createTime;
+	private Date createTime;
 	private Long updateTime;
 
 	public String getOutId() {
@@ -34,11 +36,11 @@ public class Order {
 		this.userId = userId;
 	}
 
-	public Long getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Long createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
@@ -52,7 +54,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "outId: " + outId + " title: " + title + " userId: " + userId + " createTime: " + createTime
-				+ " updateTime: " + updateTime;
+		return "<outId: " + outId + " title: " + title + " userId: " + userId + " createTime: " + createTime
+				+ " updateTime: " + updateTime + ">";
 	}
 }
