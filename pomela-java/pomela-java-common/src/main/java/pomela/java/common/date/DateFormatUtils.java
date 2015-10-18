@@ -9,24 +9,7 @@ import java.util.Locale;
 /**
  * Created by tao.he on 2015/10/13.
  */
-public class DateUtil {
-	public enum DatePattern {
-		PATTERN_1("dd/MM/yyyy:HH:mm:ss"),
-		PATTERN_2("dd/MMM/yyyy:HH:mm:ss"),
-		PATTERN_3("dd/MM/yyyy"),
-		PATTERN_4("yyyyMMdd"),
-		PATTERN_5("yyyyMMddHHmmss");
-
-		private String desc;
-
-		DatePattern(String desc) {
-			this.desc = desc;
-		}
-
-		public String getDesc() {
-			return desc;
-		}
-	}
+public class DateFormatUtils {
 
 	public static String toStr(Date date) {
 		return toStr(date, null);

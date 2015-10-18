@@ -6,7 +6,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import org.junit.Test;
-import pomela.java.common.date.DateUtil;
+import pomela.java.common.date.DateFormatUtils;
+import pomela.java.common.date.DatePattern;
 import pomela.java.common.entities.EntityMockerFactory;
 import pomela.java.common.entities.Order;
 import pomela.java.common.entities.OrderMorker;
@@ -35,7 +36,7 @@ public class JacksonJsonUtilTest {
 		System.out.println(s);
 
 		Order order1 = JacksonJsonUtil.fromJson(s, Order.class);
-		PrintUtil.print2Console(JacksonJsonUtil.toJson(order1, true));
+		PrintUtil.toConsole(JacksonJsonUtil.toJson(order1, true));
 
 		//自定义
 		String s1 = JacksonJsonUtil.toJson(order, new JsonSerializer<Order>() {
@@ -45,13 +46,13 @@ public class JacksonJsonUtilTest {
 				gen.writeStringField("out_id", value.getOutId());
 				gen.writeStringField("title_id", value.getUserId());
 				gen.writeStringField("user_id", value.getUserId());
-				gen.writeStringField("create_time", DateUtil.toStr(value.getCreateTime(), DateUtil.DatePattern.PATTERN_1));
+				gen.writeStringField("create_time", DateFormatUtils.toStr(value.getCreateTime(), DatePattern.PATTERN_1));
 				gen.writeStringField("update_time", value.getUserId());
 				gen.writeEndObject();
 			}
 		});
 
-		PrintUtil.print2Console(s1);
+		PrintUtil.toConsole(s1);
 
 	}
 
@@ -60,18 +61,19 @@ public class JacksonJsonUtilTest {
 		Order[] orders = orderMorker.mockArray(2);
 
 		String s = JacksonJsonUtil.toJson(orders, true);
-		PrintUtil.print2Console(s);
+		PrintUtil.toConsole(s);
 
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson(s, new TypeReference<Order[]>() {}));
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson(s, Order[].class));
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson(s, new TypeReference<Order[]>() {
+		}));
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson(s, Order[].class));
 
 		//more
 		List[] a = new List[2];
 		a[0] = orderMorker.mockList(2);
 		a[1] = orderMorker.mockList(2);
 		String s1 = JacksonJsonUtil.toJson(a, true);
-		PrintUtil.print2Console(s1);
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson(s1, new TypeReference<List<Order>[]>() {
+		PrintUtil.toConsole(s1);
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson(s1, new TypeReference<List<Order>[]>() {
 		}));
 
 		//自定义
@@ -84,7 +86,7 @@ public class JacksonJsonUtilTest {
 					gen.writeStringField("out_id", o.getOutId());
 					gen.writeStringField("title_id", o.getUserId());
 					gen.writeStringField("user_id", o.getUserId());
-					gen.writeStringField("create_time", DateUtil.toStr(o.getCreateTime(), DateUtil.DatePattern.PATTERN_1));
+					gen.writeStringField("create_time", DateFormatUtils.toStr(o.getCreateTime(), DatePattern.PATTERN_1));
 					gen.writeStringField("update_time", o.getUserId());
 					gen.writeEndObject();
 				}
@@ -92,7 +94,7 @@ public class JacksonJsonUtilTest {
 			}
 		});
 
-		PrintUtil.print2Console(s2);
+		PrintUtil.toConsole(s2);
 	}
 
 	@Test
@@ -100,10 +102,11 @@ public class JacksonJsonUtilTest {
 		List<Order> orders = orderMorker.mockList(2);
 
 		String s = JacksonJsonUtil.toJson(orders);
-		PrintUtil.print2Console(s);
+		PrintUtil.toConsole(s);
 
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson(s, new TypeReference<List<Order>>() {}));
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson2List(s, Order.class));
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson(s, new TypeReference<List<Order>>() {
+		}));
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson2List(s, Order.class));
 
 		//自定义
 		String s1 = JacksonJsonUtil.toJson(orders, new JsonSerializer<List<Order>>() {
@@ -115,15 +118,14 @@ public class JacksonJsonUtilTest {
 					gen.writeStringField("out_id", o.getOutId());
 					gen.writeStringField("title_id", o.getUserId());
 					gen.writeStringField("user_id", o.getUserId());
-					gen.writeStringField("create_time", DateUtil.toStr(o.getCreateTime(), DateUtil.DatePattern.PATTERN_1));
+					gen.writeStringField("create_time", DateFormatUtils.toStr(o.getCreateTime(), DatePattern.PATTERN_1));
 					gen.writeStringField("update_time", o.getUserId());
 					gen.writeEndObject();
 				}
 				gen.writeEndArray();
 			}
 		});
-
-		PrintUtil.print2Console(s1);
+		PrintUtil.toConsole(s1);
 	}
 
 	@Test
@@ -131,10 +133,11 @@ public class JacksonJsonUtilTest {
 		Map<String, Order> orderMap = orderMorker.mockMap(2);
 
 		String s = JacksonJsonUtil.toJson(orderMap, true);
-		PrintUtil.print2Console(s);
+		PrintUtil.toConsole(s);
 
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson(s, new TypeReference<HashMap<String, Order>>() {}));
-		PrintUtil.print2Console(JacksonJsonUtil.fromJson2Map(s, String.class, Order.class));
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson(s, new TypeReference<HashMap<String, Order>>() {
+		}));
+		PrintUtil.toConsole(JacksonJsonUtil.fromJson2Map(s, String.class, Order.class));
 
 		//自定义
 		String s1 = JacksonJsonUtil.toJson(orderMap, new JsonSerializer<Map<String, Order>>() {
@@ -147,7 +150,7 @@ public class JacksonJsonUtilTest {
 					gen.writeStringField("out_id", o.getOutId());
 					gen.writeStringField("title_id", o.getUserId());
 					gen.writeStringField("user_id", o.getUserId());
-					gen.writeStringField("create_time", DateUtil.toStr(o.getCreateTime(), DateUtil.DatePattern.PATTERN_1));
+					gen.writeStringField("create_time", DateFormatUtils.toStr(o.getCreateTime(), DatePattern.PATTERN_1));
 					gen.writeStringField("update_time", o.getUserId());
 					gen.writeEndObject();
 				}
@@ -155,7 +158,7 @@ public class JacksonJsonUtilTest {
 			}
 		});
 
-		PrintUtil.print2Console(s1);
+		PrintUtil.toConsole(s1);
 	}
 
 	@Test

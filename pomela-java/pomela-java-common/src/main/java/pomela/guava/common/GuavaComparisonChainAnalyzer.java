@@ -21,7 +21,7 @@ public class GuavaComparisonChainAnalyzer implements APIAnalyzer {
 
 		OrderBO order1BO = new OrderBO(order1);
 		/** ComparisonChain **/
-		PrintUtil.print2Console(order1BO.createEarlyThan(order2));
+		PrintUtil.toConsole(order1BO.createEarlyThan(order2));
 	}
 
 	public static void main(String[] args) {

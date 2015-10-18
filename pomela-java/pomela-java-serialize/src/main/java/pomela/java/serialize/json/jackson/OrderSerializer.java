@@ -2,7 +2,8 @@ package pomela.java.serialize.json.jackson;
 
 import java.io.IOException;
 
-import pomela.java.common.date.DateUtil;
+import pomela.java.common.date.DateFormatUtils;
+import pomela.java.common.date.DatePattern;
 import pomela.java.common.entities.Order;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -24,7 +25,7 @@ public class OrderSerializer extends StdSerializer<Order> {
 		gen.writeStringField("out_id", value.getOutId());
 		gen.writeStringField("title_id", value.getUserId());
 		gen.writeStringField("user_id", value.getUserId());
-		gen.writeStringField("create_time", DateUtil.toStr(value.getCreateTime(), DateUtil.DatePattern.PATTERN_1));
+		gen.writeStringField("create_time", DateFormatUtils.toStr(value.getCreateTime(), DatePattern.PATTERN_1));
 		gen.writeStringField("update_time", value.getUserId());
 		gen.writeEndObject();
 	}

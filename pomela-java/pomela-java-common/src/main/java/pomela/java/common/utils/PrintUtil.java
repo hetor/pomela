@@ -8,26 +8,28 @@ import java.util.Map;
  */
 public class PrintUtil {
 
-	public static void print2Console(Object pojo) {
+	private PrintUtil() {}
+
+	public static void toConsole(Object pojo) {
 		System.out.println(pojo);
 		System.out.println();
 	}
 
-	public static void print2Console(Object[] pojoList) {
+	public static void toConsole(Object[] pojoList) {
 		for (int i=0; i < pojoList.length; i++) {
 			System.out.println(i + ": " + pojoList[i]);
 		}
 		System.out.println();
 	}
 
-	public static void print2Console(List<?> pojoList) {
+	public static void toConsole(List<?> pojoList) {
 		for (int i=0; i < pojoList.size(); i++) {
 			System.out.println(i + ": " + pojoList.get(i));
 		}
 		System.out.println();
 	}
 
-	public static void print2Console(Map<?, ?> pojoMap) {
+	public static void toConsole(Map<?, ?> pojoMap) {
 		for (Map.Entry<?, ?> entry : pojoMap.entrySet()) {
 			System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
 		}

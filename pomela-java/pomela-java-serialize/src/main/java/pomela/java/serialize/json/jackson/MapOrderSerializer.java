@@ -3,7 +3,8 @@ package pomela.java.serialize.json.jackson;
 import java.io.IOException;
 import java.util.Map;
 
-import pomela.java.common.date.DateUtil;
+import pomela.java.common.date.DateFormatUtils;
+import pomela.java.common.date.DatePattern;
 import pomela.java.common.entities.Order;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -31,7 +32,7 @@ public class MapOrderSerializer extends StdSerializer<Map<String, Order>> {
 			gen.writeStringField("out_id", o.getOutId());
 			gen.writeStringField("title_id", o.getUserId());
 			gen.writeStringField("user_id", o.getUserId());
-			gen.writeStringField("create_time", DateUtil.toStr(o.getCreateTime(), DateUtil.DatePattern.PATTERN_1));
+			gen.writeStringField("create_time", DateFormatUtils.toStr(o.getCreateTime(), DatePattern.PATTERN_1));
 			gen.writeStringField("update_time", o.getUserId());
 			gen.writeEndObject();
 		}

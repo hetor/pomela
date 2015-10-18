@@ -8,12 +8,11 @@ import java.util.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  * Created by tao.he on 2015/10/12.
- *
- * �޸�ʱ��С��ObjectMapper�Ĳ�����ȫ�����⣨���������õ�ʱ��ʹ��ObjectMapper��
  */
 public class JacksonJsonUtil {
 
@@ -33,7 +32,7 @@ public class JacksonJsonUtil {
 	 * and only then use it (from any number of threads), usage will be
 	 * thread-safe without additional synchronization.
 	 */
-	private static final ObjectMapper _ObjectMapper = new ObjectMapper();
+	private static final ObjectMapper objectMapper = new ObjectMapper();
 //	private static final JsonFactory jsonFactory = new JsonFactory();
 
 	/**
@@ -43,8 +42,8 @@ public class JacksonJsonUtil {
 	 * methods to create NEW INSTANCES (existing one is not changed). This
 	 * allows complete thread-safe use at any point in life cycle.
 	 */
-	private static final ObjectReader _ObjectReader = _ObjectMapper.reader();
-	private static final ObjectWriter _ObjectWriter = _ObjectMapper.writer();
+	private static final ObjectReader objectReader = objectMapper.reader();
+	private static final ObjectWriter objectWriter = objectMapper.writer();
 
 
 	/**
@@ -60,7 +59,7 @@ public class JacksonJsonUtil {
 	 */
 	public static <T> T fromJson(String jsonStr, final Class<T> pojoClass) {
 		try {
-			return _ObjectReader.forType(pojoClass).readValue(jsonStr);
+			return objectReader.forType(pojoClass).readValue(jsonStr);
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
 		}
@@ -81,7 +80,27 @@ public class JacksonJsonUtil {
 	 */
 	public static <T> T fromJson(String jsonStr, TypeReference<T> typeRef) {
 		try {
-			return _ObjectReader.forType(typeRef).readValue(jsonStr);
+			return objectReader.forType(typeRef).readValue(jsonStr);
+		} catch (Throwable th) {
+			throw new RuntimeException(th);
+		}
+	}
+
+	/**
+	 * 自定义反序列化
+	 * @param jsonStr
+	 * @param clazz
+	 * @param jd
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T fromJson(String jsonStr, final Class<T> clazz, JsonDeserializer<T> jd) {
+		try {
+			ObjectMapper om = new ObjectMapper();
+			SimpleModule module = new SimpleModule();
+			module.addDeserializer(clazz, jd);
+			om.registerModule(module);
+			return om.readValue(jsonStr, clazz);
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
 		}
@@ -99,7 +118,7 @@ public class JacksonJsonUtil {
 	 */
 	public static <T> T fromJson(FileReader fr, final Class<T> pojoClass) {
 		try {
-			return _ObjectReader.forType(pojoClass).readValue(fr);
+			return objectReader.forType(pojoClass).readValue(fr);
 		} catch (Throwable th) {
 			throw new RuntimeException(th);
 		}
@@ -204,11 +223,11 @@ public class JacksonJsonUtil {
 	public static String toJson(Object o, boolean prettyPrint) {
 		try {
 			if (prettyPrint) {
-				return _ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+				return objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
 						.withDefaultPrettyPrinter()
 						.writeValueAsString(o);
 			} else {
-				return _ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+				return objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
 						.writeValueAsString(o);
 			}
 		} catch (Throwable th) {
@@ -229,11 +248,11 @@ public class JacksonJsonUtil {
 	public static void toJson(Object o, FileWriter fw, boolean prettyPrint) {
 		try {
 			if (prettyPrint) {
-				_ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+				objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
 						.withDefaultPrettyPrinter()
 						.writeValue(fw, o);
 			} else {
-				_ObjectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
+				objectWriter.withFeatures(JsonGenerator.Feature.IGNORE_UNKNOWN)
 						.writeValue(fw, o);
 			}
 		} catch (Throwable th) {

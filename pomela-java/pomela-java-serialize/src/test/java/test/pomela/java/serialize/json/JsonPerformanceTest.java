@@ -1,18 +1,12 @@
 package test.pomela.java.serialize.json;
 
-import java.io.IOException;
 import java.util.*;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import org.junit.Test;
 import pomela.java.common.entities.EntityMockerFactory;
 import pomela.java.common.entities.Order;
 import pomela.java.common.entities.OrderMorker;
 import pomela.java.common.utils.PrintUtil;
-import pomela.java.serialize.json.JacksonJsonUtil;
 import pomela.java.serialize.json.jackson.CustomJacksonJsonUtil;
 
 /**
@@ -38,7 +32,7 @@ public class JsonPerformanceTest {
 
 		long end = System.currentTimeMillis();
 
-		PrintUtil.print2Console((end - start) + "ms");
+		PrintUtil.toConsole((end - start) + "ms");
 	}
 
 
@@ -74,7 +68,7 @@ public class JsonPerformanceTest {
 //						}
 //					}));
 				}
-				PrintUtil.print2Console(result);
+				PrintUtil.toConsole(result);
 			}
 		};
 	}
