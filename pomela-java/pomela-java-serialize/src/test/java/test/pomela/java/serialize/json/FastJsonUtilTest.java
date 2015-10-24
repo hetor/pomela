@@ -4,7 +4,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.junit.Test;
 import pomela.java.common.entities.EntityMockerFactory;
 import pomela.java.common.entities.Order;
-import pomela.java.common.entities.OrderMorker;
+import pomela.java.common.entities.OrderMocker;
 import pomela.java.common.utils.PrintUtil;
 import pomela.java.serialize.json.FastJsonUtil;
 import pomela.java.serialize.json.fastjson.SimplePropertyPreFilterCreator;
@@ -17,14 +17,14 @@ import java.util.List;
  */
 public class FastJsonUtilTest {
 
-    private OrderMorker orderMorker = EntityMockerFactory.getOrderMorker();
+    private OrderMocker orderMocker = EntityMockerFactory.getOrderMocker();
 
     @Test
     public void test_toJson_Filter_Features() {
-        Order order = orderMorker.mockOne();
+        Order order = orderMocker.mockOne();
         PrintUtil.toConsole(FastJsonUtil.toJson(order, SimplePropertyPreFilterCreator.newInstance(Order.class, "title", "updateTime")));
 
-        List<Order> orders = orderMorker.mockList(2);
+        List<Order> orders = orderMocker.mockList(2);
         PrintUtil.toConsole(FastJsonUtil.toJson(orders, SimplePropertyPreFilterCreator.newInstance("title", "updateTime"),
                 SerializerFeature.DisableCircularReferenceDetect));
 
@@ -40,13 +40,13 @@ public class FastJsonUtilTest {
 
     @Test
     public void test_toJson_DateFormat() {
-        Order order = orderMorker.mockOne();
+        Order order = orderMocker.mockOne();
         PrintUtil.toConsole(FastJsonUtil.toJson(order, "yyyy-MM-dd"));
     }
 
     @Test
     public void test_toJson_CircularRefDetect() {
-        List<Order> orders = orderMorker.mockList(2);
+        List<Order> orders = orderMocker.mockList(2);
         CommRet<List<Order>> commRet = CommRet.newInstance();
         commRet.setId(1);
         commRet.setCode(CommRet.SUCC);

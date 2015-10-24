@@ -11,7 +11,7 @@ import java.util.Map;
  * @param <K>
  *     key class for map
  */
-public interface EntityMorker<T, K> {
+public interface EntityMocker<T, K> {
 	T mockOne();
 	T[] mockArray(int size);
 	List<T> mockList(int size);

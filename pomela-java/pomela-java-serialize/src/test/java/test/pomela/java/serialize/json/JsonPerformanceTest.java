@@ -5,7 +5,7 @@ import java.util.*;
 import org.junit.Test;
 import pomela.java.common.entities.EntityMockerFactory;
 import pomela.java.common.entities.Order;
-import pomela.java.common.entities.OrderMorker;
+import pomela.java.common.entities.OrderMocker;
 import pomela.java.common.utils.PrintUtil;
 import pomela.java.serialize.json.jackson.CustomJacksonJsonUtil;
 
@@ -14,7 +14,7 @@ import pomela.java.serialize.json.jackson.CustomJacksonJsonUtil;
  */
 public class JsonPerformanceTest {
 
-	private static final OrderMorker orderMocker = EntityMockerFactory.getOrderMorker();
+	private static final OrderMocker orderMocker = EntityMockerFactory.getOrderMocker();
 	private static final Order order = orderMocker.mockOne();
 	private static final List<Order> orders = orderMocker.mockList(5);
 	private static final Map<String, Order> orderMap = orderMocker.mockMap(5);

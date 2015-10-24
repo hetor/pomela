@@ -1,0 +1,52 @@
+==> Class JsonArray:
+A class representing an array type in Json.
+An array is a list of JsonElements each of which can be of a different type.
+This is an ordered list, meaning that the order in which elements are added is preserved.
+
+==> Class JsonElement:
+A class representing an element of Json. It could either be a JsonObject, a JsonArray, a JsonPrimitive or a JsonNull.
+
+==> Class JsonObject:
+A class representing an object type in Json. An object consists of name-value pairs where names are strings, and values are any other type of JsonElement.
+This allows for a creating a tree of JsonElements. The member elements of this object are maintained in order they were added.
+
+==> Class JsonPrimitive:
+A class representing a Json primitive value. A primitive value is either a String, a Java primitive, or a Java primitive wrapper type.
+
+==> Class JsonNull
+A class representing a Json null value.
+
+==> Interface  JsonDeserializationContext:
+Context for deserialization that is passed to a custom deserializer during invocation of its
+JsonDeserializer.deserialize(JsonElement, Type, JsonDeserializationContext) method.
+
+==> Interface JsonSerializationContext:
+Context for serialization that is passed to a custom serializer during invocation of its
+JsonSerializer.serialize(Object, Type, JsonSerializationContext) method.
+
+==> Interface JsonDeserializer<T>:
+New applications should prefer TypeAdapter, whose streaming API is more efficient than this interface's tree API.
+
+Interface representing a custom deserializer for Json. You should write a custom deserializer,
+if you are not happy with the default deserialization done by Gson.
+You will also need to register this deserializer through GsonBuilder.registerTypeAdapter(Type, Object).
+
+==> Class JsonIOException:
+This exception is raised when Gson was unable to read an input stream or write to one.
+
+==> Class JsonParseException:
+This exception is raised if there is a serious issue that occurs during parsing of a Json string.
+One of the main usages for this class is for the Gson infrastructure.
+If the incoming Json is bad/malicious, an instance of this exception is raised.
+
+This exception is a RuntimeException because it is exposed to the client.
+Using a RuntimeException avoids bad coding practices on the client side where they catch the exception and do nothing.
+It is often the case that you want to blow up if there is a parsing error (i.e. often clients do not know how to recover from a JsonParseException.
+
+
+==> Class JsonParser:
+A parser to parse Json into a parse tree of JsonElements.
+
+==> Class JsonReader:
+http://google.github.io/gson/apidocs/com/google/gson/stream/JsonReader.html
+

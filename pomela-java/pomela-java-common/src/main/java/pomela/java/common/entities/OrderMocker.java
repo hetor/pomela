@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by tao.he on 2015/10/13.
  */
-public class OrderMorker implements EntityMorker<Order, String> {
+public class OrderMocker implements EntityMocker<Order, String> {
 
 	@Override
 	public Order mockOne() {

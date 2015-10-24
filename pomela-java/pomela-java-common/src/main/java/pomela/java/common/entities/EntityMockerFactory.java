@@ -5,9 +5,9 @@ package pomela.java.common.entities;
  */
 public class EntityMockerFactory {
 
-	private static final OrderMorker orderMorker = new OrderMorker();
+	private static final OrderMocker orderMocker = new OrderMocker();
 
-	public static OrderMorker getOrderMorker() {
-		return orderMorker;
+	public static OrderMocker getOrderMocker() {
+		return orderMocker;
 	}
 }
