@@ -1,6 +1,7 @@
 package pomela.java.serialize.json.gson;
 
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
 import pomela.java.common.entities.Order;
 
 /**

@@ -43,7 +43,7 @@ public class GsonJsonUtil {
 	 */
 	public static String toJsonCustom(Object o) {
 		Gson gson = new GsonBuilder()
-				.registerTypeAdapter(Order.class, new OrderTypeAdapter())
+				.registerTypeAdapter(Order.class, new OrderTypeAdapter().nullSafe())
 				.enableComplexMapKeySerialization()
 				.serializeNulls()
 				.setDateFormat(DateFormat.LONG)

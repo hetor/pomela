@@ -13,8 +13,21 @@ This allows for a creating a tree of JsonElements. The member elements of this o
 ==> Class JsonPrimitive:
 A class representing a Json primitive value. A primitive value is either a String, a Java primitive, or a Java primitive wrapper type.
 
-==> Class JsonNull
+==> Enum JsonToken:
+A structure, name or value type in a JSON-encoded string.
+
+==> Class JsonNull:
 A class representing a Json null value.
+
+==> Class TypeToken<T>:
+Represents a generic type T. Java doesn't yet provide a way to represent generic types, so this class does.
+Forces clients to create a subclass of this class which enables retrieval the type information even at runtime.
+
+For example, to create a type literal for List<String>, you can create an empty anonymous inner class:
+TypeToken<List<String>> list = new TypeToken<List<String>>() {};
+
+This syntax cannot be used to create type literals that have wildcard parameters,
+such as Class<?> or List<? extends CharSequence>.i
 
 ==> Interface  JsonDeserializationContext:
 Context for deserialization that is passed to a custom deserializer during invocation of its
@@ -26,6 +39,10 @@ JsonSerializer.serialize(Object, Type, JsonSerializationContext) method.
 
 ==> Interface JsonDeserializer<T>:
 New applications should prefer TypeAdapter, whose streaming API is more efficient than this interface's tree API.
+
+==> Interface JsonSerializer<T>:
+New applications should prefer TypeAdapter, whose streaming API is more efficient than this interface's tree API.
+
 
 Interface representing a custom deserializer for Json. You should write a custom deserializer,
 if you are not happy with the default deserialization done by Gson.
@@ -43,10 +60,25 @@ This exception is a RuntimeException because it is exposed to the client.
 Using a RuntimeException avoids bad coding practices on the client side where they catch the exception and do nothing.
 It is often the case that you want to blow up if there is a parsing error (i.e. often clients do not know how to recover from a JsonParseException.
 
+==> Class JsonSyntaxException:
+This exception is raised when Gson attempts to read (or write) a malformed JSON element.
+
+==> Class MalformedJsonException:
+Thrown when a reader encounters malformed JSON.
+Some syntax errors can be ignored by calling JsonReader.setLenient(boolean).
 
 ==> Class JsonParser:
 A parser to parse Json into a parse tree of JsonElements.
 
+==> JsonStreamParser:
+http://google.github.io/gson/apidocs/com/google/gson/JsonStreamParser.html
+
 ==> Class JsonReader:
 http://google.github.io/gson/apidocs/com/google/gson/stream/JsonReader.html
+
+==> Class JsonWriter:
+http://google.github.io/gson/apidocs/com/google/gson/stream/JsonWriter.html
+
+==> Enum LongSerializationPolicy:
+Defines the expected format for a long or Long type when its serialized.
 
