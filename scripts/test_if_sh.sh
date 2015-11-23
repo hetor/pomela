@@ -24,3 +24,27 @@ test -x ${filename} && perm="${perm} executable"
 echo "The filename: ${filename} is a ${filetype}"
 echo "And the permissions for you are : ${perm}"
 
+read -p "please input (Y/N):" yn
+
+# ["${yn}" == "Y"] && ["${yn1}" == "Y"]
+if [ "${yn}" == "Y" ] || [ "${yn}" == "y" ]; then
+    echo "OK, continue"
+    exit 0
+fi
+
+# [ "${yn}" == "N" -a "$[yn1]" == "N"]
+if [ "${yn}" == "N" -o "${yn}" == "n" ]; then
+    echo "Oh, interrupt!"
+    exit 0
+fi
+
+read -p "Please input (Y/N): " yn
+
+if [ "${yn}" == "Y" ] || [ "${yn}" == "y" ]; then
+    echo "OK, continue"
+elif [ "${yn}" == "N" ] || [ "${yn}" == "n" ]; then
+    echo "Oh, interrupt!"
+else
+    echo "I don't know what your choice is"
+fi
+            

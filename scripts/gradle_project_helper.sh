@@ -1,19 +1,18 @@
 #!/bin/sh
-
 PROJECT_NAME=$1      #'pomela-project'
 MODULE_NAME=$2       #'pomela-project-module'
 
 if [ -n "$PROJECT_NAME" ]; then
-    echo -e "project name: $PROJECT_NAME"
+    echo "project name: $PROJECT_NAME"
 else
-    echo -e 'error: no project name'
+    echo 'error: no project name'
     exit 1
 fi
 
 if [ -n "$MODULE_NAME" ]; then
-    echo -e "module name: $MODULE_NAME"
+    echo "module name: $MODULE_NAME"
 else
-    echo -e 'error: no module name'
+    echo 'error: no module name'
     exit 1
 fi
 
@@ -22,49 +21,59 @@ ROOT_PATH=`pwd`/..
 cd $ROOT_PATH 
 
 if [ -d $PROJECT_NAME ]; then
-    echo -e "already exist directory: `pwd`/$PROJECT_NAME"
+    echo "already exist directory: `pwd`/$PROJECT_NAME"
 else
-    mkdir -p $PROJECT_NAME && echo -e "create directory: `pwd`/$PROJECT_NAME"
+    mkdir -p $PROJECT_NAME && echo "create directory: `pwd`/$PROJECT_NAME"
 fi
 
-if [ -e ${PROJECT_NAME}.settings.gradle ]; then
-    echo -e "already exist file: `pwd`/${PROJECT_NAME}.settings.gradle"
+if [ -f ${PROJECT_NAME}.settings.gradle ]; then
+    echo "already exist file: `pwd`/${PROJECT_NAME}.settings.gradle"
 else
-    touch ${PROJECT_NAME}.settings.gradle && echo -e "create file: `pwd`/${PROJECT_NAME}.settings.gradle"
+    touch ${PROJECT_NAME}.settings.gradle && echo "create file: `pwd`/${PROJECT_NAME}.settings.gradle"
 fi
 
 
 cd $ROOT_PATH/$PROJECT_NAME 
 
 if [ -d $MODULE_NAME ]; then
-    echo -e "already exist directory: `pwd`/$MODULE_NAME"
+    echo "already exist directory: `pwd`/$MODULE_NAME"
 else
-    mkdir -p $MODULE_NAME && echo -e "create directory: `pwd`/$MODULE_NAME"
+    mkdir -p $MODULE_NAME && echo "create directory: `pwd`/$MODULE_NAME"
 fi
 
 
 cd $ROOT_PATH/$PROJECT_NAME/$MODULE_NAME
 
-if [ -e build.gradle ]; then
-    echo -e "already exist file: `pwd`/build.gradle"
+if [ -f build.gradle ]; then
+    echo "already exist file: `pwd`/build.gradle"
 else
-    touch build.gradle && echo -e "create file: `pwd`/build.gradle"
+    touch build.gradle && echo "create file: `pwd`/build.gradle"
 fi
 
 if [ -d src/main/java ]; then
-    echo -e "already exist directory: `pwd`/src/main/java"
+    echo "already exist directory: `pwd`/src/main/java"
 else
-     mkdir -p src/main/java && echo -e "create directory: `pwd`/src/main/java"
+     mkdir -p src/main/java && echo "create directory: `pwd`/src/main/java"
 fi
 
 if [ -d src/test/java ]; then
-    echo -e "already exist directory: `pwd`/src/test/java"
+    echo "already exist directory: `pwd`/src/test/java"
 else
-    mkdir -p src/test/java && echo -e "create directory: `pwd`/src/test/java"
+    mkdir -p src/test/java && echo "create directory: `pwd`/src/test/java"
 fi
 
 
 cd $ROOT_PATH 
-grep "include $PROJECT_NAME:$MODULE_NAME" ${PROJECT_NAME}.settings.gradle || sed -i "$a\
-    include $PROJECT_NAME:$MODULE_NAME\
-    " ${PROJECT_NAME}.settings.gradle
+p_existing=$(grep "include '$PROJECT_NAME:$MODULE_NAME'" ${PROJECT_NAME}.settings.gradle)
+if [ "$p_existing" == "" ]; then
+    echo "include '$PROJECT_NAME:$MODULE_NAME'" >> ${PROJECT_NAME}.settings.gradle && echo "add setting: \"include '$PROJECT_NAME:$MODULE_NAME'\""
+else
+    echo "already exist setting: \"include '$PROJECT_NAME:$MODULE_NAME'\""
+fi
+
+s_existing=$(grep "apply from: '${PROJECT_NAME}.settings.gradle'" settings.gradle)
+if [ "$s_existing" == "" ]; then
+    echo "apply from: '${PROJECT_NAME}.settings.gradle'" >> settings.gradle && echo "add setting: \"apply from: '${PROJECT_NAME}.settings.gradle'\""
+else
+    echo "already exist setting: \"apply from: '${PROJECT_NAME}.settings.gradle'\""
+fi
