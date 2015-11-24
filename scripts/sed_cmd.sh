@@ -12,8 +12,13 @@ nl /etc/passwd | sed '50,90d'
 
 
 #插入行
+#append after 90
 #nl /etc/passwd | sed '90a drink tea'  #centos
 nl /etc/passwd | sed '90a\
+    drink tea\
+    '
+# insert before 90
+nl /etc/passwd | sed '90i\
     drink tea\
     '
 
@@ -40,3 +45,6 @@ sed -i.bak '$a\
     #just comment\
     ' data/pay.properties
 
+sed -i.bak '$i\
+    #just comment\
+    ' data/pay.properties
