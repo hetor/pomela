@@ -1,5 +1,7 @@
 package com.pomela.orm.mybatis.generator;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by tao.he on 2015/11/24.
  */
@@ -19,7 +21,7 @@ public class DefaultCommentGenerator {
 
 		sb.append(" *  "); //$NON-NLS-1$
 		sb.append(introspectedColumn.getRemarks());
-		sb.append(",ËùÊô±í×Ö¶ÎÎª");
+		sb.append(",ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½Îª");
 		sb.append(introspectedTable.getFullyQualifiedTable());
 		sb.append('.');
 		sb.append(introspectedColumn.getActualColumnName());
