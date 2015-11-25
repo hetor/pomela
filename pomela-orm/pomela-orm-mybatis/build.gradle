@@ -1,4 +1,5 @@
 dependencies{
     compile libraries.mybatis_generator
     compile libraries.mybatis_generator_plugins
+    compile libraries.mysql_connector_java
 }

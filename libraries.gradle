@@ -57,6 +57,9 @@ ext {
     mybatis_generator:      'org.mybatis.generator:mybatis-generator-core:1.3.2',
     mybatis_generator_plugins: 'net.javaforge.mybatis.generator:mybatis-generator-plugins:1.0.0',
 
+    //mysql
+    mysql_connector_java:    'mysql:mysql-connector-java:5.1.21',
+
     //jackson
     jackson_core:           'com.fasterxml.jackson.core:jackson-core:2.6.1',
     jackson_annotations:    'com.fasterxml.jackson.core:jackson-annotations:2.6.1',

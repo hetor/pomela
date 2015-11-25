@@ -1,7 +1,7 @@
 #!/bin/sh
 
 CURRENT_USER="tao.he"
-ORDER_OUT_ID="2015102315183211024878901"
+ORDER_OUT_ID="$1"
 
 ssh $CURRENT_USER@223.252.220.187 -p 1046 <<-!
 cd /home/$CURRENT_USER/ddb4.5.7.2/scripts
