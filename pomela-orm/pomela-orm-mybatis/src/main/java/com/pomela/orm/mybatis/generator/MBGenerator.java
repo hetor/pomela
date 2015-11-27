@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * Created by hetor on 15/11/25.
@@ -19,15 +19,15 @@ public class MBGenerator {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
 
-        File configFile = new File(MBGenerator.class.getResource(configPath).getFile());
+        File configFile = new ClassPathResource(configPath).getFile();
         System.out.println("config file --> " + configFile.getAbsoluteFile());
 
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
 
-        for(Context context : config.getContexts()){
-            context.addProperty("overwrite", String.valueOf(overwrite));
-        }
+//        for(Context context : config.getContexts()){
+//            context.addProperty("overwrite", String.valueOf(overwrite));
+//        }
 
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 
