@@ -6,6 +6,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+
 echo "This program will print your selection !"
 # read -p "Input your choice: " choice   # 暫時取消，可以替換！
 # case ${choice} in                      # 暫時取消，可以替換！

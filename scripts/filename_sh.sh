@@ -12,6 +12,10 @@ read -p "Please input your filename: " fileuser         # 提示使用者輸入
 
 # 2. 為了避免使用者隨意按 Enter ，利用變數功能分析檔名是否有設定？
 filename=${fileuser:-"filename"}           # 開始判斷有否設定檔名
+#filename=${fileuser:-"filename"} 
+#fileuser 变量未设定或者为空，filename取"-"后面的值;否则filename=$fileuser
+#filename=${fileuser-"filename"} 
+#fileuser 变量未设定，filename取"-"后面的值;否则如果变量fileuser为空或者有值filename=$fileuser
 
 # 3. 開始利用 date 指令來取得所需要的檔名了；
 date1=$(date --date='2 days ago' +%Y%m%d)  # 前兩天的日期

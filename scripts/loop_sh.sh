@@ -6,6 +6,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+#注意${yn}外面必须要加""
 while [ "${yn}" != "yes" -a "${yn}" != "YES" ]
 do
     read -p "Please input yes/YES to stop this program: " yn
@@ -50,6 +51,7 @@ s=0
 for (( i=1; i<=${nu}; i=i+1 ))
 do
     s=$((${s}+${i}))
+    echo $((${s}*${i}))
 done
 echo "The result of '1+2+3+...+${nu}' is ==> ${s}"
 

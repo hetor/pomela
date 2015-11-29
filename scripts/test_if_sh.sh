@@ -8,6 +8,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+# test
 # 1. 讓使用者輸入檔名，並且判斷使用者是否真的有輸入字串？
 echo -e "Please input a filename, I will check the filename's type and permission. \n\n"
 read -p "Input a filename : " filename
@@ -24,14 +25,14 @@ test -x ${filename} && perm="${perm} executable"
 echo "The filename: ${filename} is a ${filetype}"
 echo "And the permissions for you are : ${perm}"
 
-read -p "please input (Y/N):" yn
 
+# if
+read -p "please input (Y/N):" yn
 # ["${yn}" == "Y"] && ["${yn1}" == "Y"]
 if [ "${yn}" == "Y" ] || [ "${yn}" == "y" ]; then
     echo "OK, continue"
     exit 0
 fi
-
 # [ "${yn}" == "N" -a "$[yn1]" == "N"]
 if [ "${yn}" == "N" -o "${yn}" == "n" ]; then
     echo "Oh, interrupt!"
@@ -39,7 +40,6 @@ if [ "${yn}" == "N" -o "${yn}" == "n" ]; then
 fi
 
 read -p "Please input (Y/N): " yn
-
 if [ "${yn}" == "Y" ] || [ "${yn}" == "y" ]; then
     echo "OK, continue"
 elif [ "${yn}" == "N" ] || [ "${yn}" == "n" ]; then
