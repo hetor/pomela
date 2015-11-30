@@ -13,6 +13,8 @@ echo ${PATH} | cut -d ':' -f 5
 #那么如果想要列出第3与第5呢？，就是这样：
 echo ${PATH} | cut -d ':' -f 3,5
 
+echo ${PATH} | cut -d ':' -f 3-5
+
 export
 # 注意看，每个资料都是排列整齐的输出！如果我们不想要『 declare -x 』时，就得这么做：
 export | cut -c 12-
