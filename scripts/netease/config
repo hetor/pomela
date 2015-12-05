@@ -1,0 +1,61 @@
+Host bj-ht1
+    User tao.he
+    HostName 10.120.152.130
+    ForwardAgent yes
+    ForwardX11 yes
+    Port 1046
+    #IdentityFile ~/.ssh/github.key
+    #LocalForward 9906 127.0.0.1:3306
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+
+
+# haitao-haitao
+# usage: 
+#     ssh binjiang-haitao1
+#     ssh binjiang-haitao2
+#     ssh hzabj-haitao-haitao1
+#     ssh hzabj-haitao-haitao2
+#     ssh hzaxs-haitao-haitao1
+#     ssh hzaxs-haitao-haitao2
+#     ssh classa-haitao1
+#     ssh classa-haitao2
+#     ssh classa-haitao11
+Host *-haitao*
+    User tao.he
+    HostName %h.server.163.org
+    Port 1046
+    ForwardAgent yes
+    ForwardX11 yes
+    ProxyCommand ssh bj-ht1 nc -w 600 %h %p
+
+# haitao-pay
+# usage:
+#     ssh hzabj-haitao-pay1 
+#     ssh hzabj-haitao-pay2
+#     ssh hzaxs-haitao-pay1
+#     ssh hzaxs-haitao-pay2
+Host *-pay*
+    User tao.he
+    HostName %h.server.163.org
+    Port 1046
+    ForwardAgent yes
+    ForwardX11 yes
+    ProxyCommand ssh bj-ht1 nc -w 600 %h %p
+
+
+#Host axs-pay1
+#    User tao.he
+#    HostName hzaxs-haitao-pay1.server.163.org
+#    Port 1046
+#    ForwardAgent yes
+#    ForwardX11 yes
+#    ProxyCommand ssh bj-ht1 nc -w 600 %h %p
+#
+#Host axs-pay2
+#    User tao.he
+#    HostName hzaxs-haitao-pay2.server.163.org
+#    Port 1046
+#    ForwardAgent yes
+#    ForwardX11 yes
+#    ProxyCommand ssh bj-ht1 nc -w 600 %h %p

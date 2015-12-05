@@ -2,16 +2,24 @@
 
 CURRENT_USER="tao.he"
 
+TEST_IP=(19 223.252.220.20 223.252.220.185 223.252.220.187 223.252.220.184 223.252.220.70 223.252.220.125 106.2.44.22 10.165.139.198 223.252.220.188 223.252.220.208 106.2.44.21 106.2.44.36 106.2.44.37 106.2.44.38 106.2.44.39 106.2.44.40 106.2.44.41 106.2.44.42 106.2.44.43)
+INTEGRATION_IP=(1 223.252.220.198)
+HOTFIX_IP=(1 223.252.220.183)
+PRE_IP=(4 223.252.196.116 223.252.192.150 106.2.33.38 106.2.33.4)
+ONLINE_HAITAO_IP=(9 binjiang-haitao1 binjiang-haitao2 hzabj-haitao-haitao1 hzabj-haitao-haitao2 hzaxs-haitao-haitao1 hzaxs-haitao-haitao2 classa-haitao1 classa-haitao2 classa-haitao11)
+ONLINE_PAY_IP=(4 hzabj-haitao-pay1 hzabj-haitao-pay2 hzaxs-haitao-pay1 hzaxs-haitao-pay2)
+
+
 function doCustom() {
     IP="106.2.33.38"
     [ "$1" == "pay" ] && APP="8191" || APP="8182"
 
-    grep -e '[0-9]\{25\}' data/orderIds.txt | sed 's/[^0-9]/|/g' | sed 's/|[0-9]\{1,24\}|/|/g' | sed 's/|[0-9]\{26,\}|/|/g' \
-        | sed 's/|/\n/g' | grep -v '^$' | sort | uniq > data/orderIds.tmp
+    grep -e '[0-9]\{25\}' orderIds.txt | sed 's/[^0-9]/|/g' | sed 's/|[0-9]\{1,24\}|/|/g' | sed 's/|[0-9]\{26,\}|/|/g' \
+        | sed 's/|/\n/g' | grep -v '^$' | sort | uniq > orderIds.tmp
 
-    ORDER_NUM=`grep -v '^$' data/orderIds.tmp | wc -l`
+    ORDER_NUM=`grep -v '^$' orderIds.tmp | wc -l`
 
-    for orderId in `cat data/orderIds.tmp`
+    for orderId in `cat orderIds.tmp`
     do
         curl "http://$IP:$APP/manualinvoke/acquireCustoms?orderId=$orderId"
         #echo "http://$IP:$APP/manualinvoke/acquireCustoms?orderId=$orderId"
@@ -62,6 +70,36 @@ function doRefund() {
 #!
 }
 
+function ssh2Test() {
+    echo "log-- ssh $CURRENT_USER@${TEST_IP[$1]} -p 1046"
+    ssh $CURRENT_USER@${TEST_IP[$1]} -p 1046
+}
+
+function ssh2Pre() {
+    echo "log-- ssh $CURRENT_USER@${PRE_IP[$1]} -p 1046"
+    ssh $CURRENT_USER@${PRE_IP[$1]} -p 1046
+}
+
+function ssh2Hotfix() {
+    echo "log-- ssh $CURRENT_USER@${HOTFIX_IP[$1]} -p 1046"
+    ssh $CURRENT_USER@${HOTFIX_IP[$1]} -p 1046
+}
+
+function ssh2Integration() {
+    echo "log-- ssh $CURRENT_USER@${INTEGRATION_IP[$1]} -p 1046"
+    ssh $CURRENT_USER@${INTEGRATION_IP[$1]} -p 1046
+}
+
+function ssh2OnlineHaitao() {
+   echo "log-- ssh ${ONLINE_HAITAO_IP[$1]}"
+   ssh ${ONLINE_HAITAO_IP[$1]}
+}
+
+function ssh2OnlinePay() {
+   echo "log-- ssh ${ONLINE_PAY_IP[$1]}"
+   ssh ${ONLINE_PAY_IP[$1]}
+}
+
 case ${1} in
   "-r")
        doRefund "${2}" 
@@ -71,8 +109,45 @@ case ${1} in
        doCustom "${2}"
        shift 2
        ;;
+  "-s")
+      case ${2} in
+          "-t")
+              ssh2Test "${3}"
+              shift 3
+              ;;
+          "-p")
+              ssh2Pre "${3}"
+              shift 3
+              ;;
+          "-h")
+              ssh2Hotfix "1"
+              shift 2
+              ;;
+          "-i")
+              ssh2Integration "1"
+              shift 2
+              ;;
+          "-o")
+              case ${3} in
+                  "-h")
+                      ssh2OnlineHaitao "${4}"
+                      shift 4
+                      ;;
+                  "-p")
+                      ssh2OnlinePay "${4}"
+                      shift 4
+                      ;;
+                  *)
+                      echo "Usage {-s -o -h|-p}"
+                      ;;
+               esac
+              ;;
+          *)
+              echo "Usage {-s -t|-p|-h|-i|-o}"
+              ;;
+      esac
+      ;;
   *)
-       echo "Usage ${0} {one|two|three}"
-       ;;
+      echo "Usage {-r|-c|-s}"
+      ;;
 esac
-
