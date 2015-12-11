@@ -1,0 +1,8 @@
+state trade_id pay_method hqg_extra_fee real_pay_method_order_id deliver_time pay_time succ_time close_time
+6 6514969 2 NULL NULL NULL 2015-12-08 10:16:06 NULL NULL
+out_id order_out_id order_item_out_id create_time transfer_time amount state pay_method account_out account_in type from_type
+ 2015120810163121048858159  2015-12-08 10:49:58 2015-12-08 10:53:14 488.000 1 2 neteasehkhqg@service.netease.com 15288137485 1 1
+gorder_id create_time update_time close_time pay_time state real_pay_method pay_method wyb_order_id real_pay_method_order_id pay_method_sub_type owner_type real_pay_method_account is_merge_payment
+201512081016GORDER58158125 2015-12-08 10:16:05 2015-12-08 10:16:17 NULL 2015-12-08 10:16:06 1 NULL 2 461812414 2015120821001003110096616038 5 0 15288137485 0
+id type state max_count count alert_when_exceed expire_time create_time last_schedule_time next_schedule_time triggers trigger_type params params_md5 search_key is_merge_payment
+328504 4 1 30 1 8 1449629397793 1449542997793 1449543194110 1449543002793 5,20,60,120,300,600,600,6000 0 {"id":311021,"userId":3757191} b8ef14706101af11921694da8ea2b099 2015120810163121048858159 0
