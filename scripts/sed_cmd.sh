@@ -1,11 +1,4 @@
 #!/bin/sh
-for file in $(find data/ -name 'pay.properties')
-do
-   #echo "File: ${file}"
-   #echo `grep 'wyb.alipay.account=neteasehkhqg@service.netease.com' ${file}`
-   #sed -i -n '/^wyb\.alipay\.account/d' ${file}
-   sed '/^wyb\.alipay\.account/d' ${file}
-done
 
 #删除行
 nl /etc/passwd | sed '50,90d'
@@ -45,3 +38,6 @@ sed -i.bak '$a\
 sed -i.bak '$i\
     #just comment\
     ' data/pay.properties
+
+
+#http://blog.csdn.net/leexide/article/details/17199167

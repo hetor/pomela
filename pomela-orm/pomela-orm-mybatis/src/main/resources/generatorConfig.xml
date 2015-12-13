@@ -65,5 +65,23 @@
                enableSelectByExample="false" selectByExampleQueryId="false" >
             <property name="useActualColumnNames" value="false"/>
         </table>
+
+        <table schema="general" tableName="order_item" domainObjectName="OrderItem"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table schema="general" tableName="goods_info_snapshot" domainObjectName="GoodsInfoSnapshot"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+        <table schema="general" tableName="logistic_info" domainObjectName="LogisticInfo"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="false"/>
+        </table>
     </context>
 </generatorConfiguration>
