@@ -1,4 +1,11 @@
 #!/bin/bash
+
+#Author: tao.he
+#Date: 2015-12-27
+#Desciption: 支付宝手动推送支付流
+#Example: 
+	# ./auto_custom.sh -o <order_out_id>
+
 export LANG=zh_CN.UTF-8
 
 CURRENT_USER="tao.he"

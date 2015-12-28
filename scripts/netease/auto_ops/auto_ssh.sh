@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#Author: tao.he
+#Date: 2015-12-27
+#Desciption: ssh to test/hotfix/integration/pre/online(haitao, haitao-pay, haitao-dw) environment.
+#Example: 
+	#./auto_ssh.sh -t 3
+	#./auto_ssh.sh -h
+	#./auto_ssh.sh -i
+	#./auto_ssh.sh -p 1
+	#./auto_ssh.sh -o -h 1
+	#./auto_ssh.sh -o -p 1
+	#./auto_ssh.sh -o -w 1
+
 CURRENT_USER="tao.he"
 
 TEST_IP=(19 223.252.220.20 223.252.220.185 223.252.220.187 223.252.220.184 223.252.220.70 223.252.220.125 106.2.44.22 223.252.220.212 223.252.220.188 223.252.220.208 106.2.44.21 106.2.44.36 106.2.44.37 106.2.44.38 106.2.44.39 106.2.44.40 106.2.44.41 106.2.44.42 106.2.44.43)
