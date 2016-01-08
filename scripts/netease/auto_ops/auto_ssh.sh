@@ -51,8 +51,8 @@ function ssh_online_dw() {
 }
 
 function ssh_online_ddb() {
-    echo "log-- ssh ${DDB_IP[$1]}"
-    test ${#DDB_IP[@]} -gt $1 && ssh ${DDB_IP[$1]}
+    echo "log-- ssh ${DDB_IP[1]}"
+    test ${#DDB_IP[@]} -gt 1 && ssh ${DDB_IP[1]}
 }
 
 

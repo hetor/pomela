@@ -55,23 +55,51 @@ alipay.domestic.hangzhou.youmai.pf.name.str=\\u676d\\u5dde\\u4f18\\u4e70\\u79d1\
 alipay.domestic.hangzhou.youmai.pf.account=neteaseyoumaipf@service.netease.com\
 alipay.domestic.hangzhou.youmai.pf.account.id=2088121421423585' ${file}
     done
-
 }
 
-case ${1} in
-    "dw"|"haitao-dw")
-	pros_add "${DW_HOME}"
-	shift 2
-	;;
-    "pay"|"haitao-pay")
-	pros_add "${PAY_HOME}"
-	shift 2
-	;;
-    "ht"|"haitao") 
-	pros_add "${HAITAO_HOME}"
-	shift 2
-	;;
-    *)
-	echo "Usage {pay|haitao-pay|dw|haitao-dw|ht|haitao}"
-	;;
-esac
+function usage() {
+    echo "Invalid option: -$OPTARG"
+    echo "Usage: `basename $0` -m dw|pay|ht"
+    exit 1
+}
+
+while getopts ":m:" arg
+do
+    case $arg in
+        m)
+	    if [ "$OPTARG" == "dw" ] || [ "$OPTARG" == "haitao-dw" ];then
+	        pros_add "${DW_HOME}"
+            elif [ "$OPTARG" == "pay" ] || [ "$OPTARG" == "haitao-pay" ];then
+	        pros_add "${DW_HOME}"
+	    elif [ "$OPTARG" == "ht" ] || [ "$OPTARG" == "haitao" ];then
+	        pros_add "${DW_HOME}"
+	    else
+                usage
+	    fi
+	    ;;
+	\?)
+	    usage
+	    ;;
+	:)
+	    echo "Miss option argument -$OPTARG dw|pay|ht"
+	    ;;
+    esac
+done
+
+#case ${1} in
+#    "dw"|"haitao-dw")
+#	pros_add "${DW_HOME}"
+#	shift 2
+#	;;
+#    "pay"|"haitao-pay")
+#	pros_add "${PAY_HOME}"
+#	shift 2
+#	;;
+#    "ht"|"haitao") 
+#	pros_add "${HAITAO_HOME}"
+#	shift 2
+#	;;
+#    *)
+#	echo "Usage {pay|haitao-pay|dw|haitao-dw|ht|haitao}"
+#	;;
+#esac
