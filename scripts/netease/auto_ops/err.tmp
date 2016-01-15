@@ -1,1 +1,2 @@
 Warning: Using a password on the command line interface can be insecure.
+ERROR 2003 (HY000): Can't connect to MySQL server on '10.120.154.154' (10060)
