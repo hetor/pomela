@@ -57,13 +57,32 @@ HAITAO_HOME="/c/Users/tao.he/Code/haitao"
 #    done
 #}
 
+#function pros_add() {
+#    PROJECT_HOME=$1
+#    for file in $(find $PROJECT_HOME/ -name 'pay.properties')
+#    do
+#        echo "File: ${file}"
+#        sed -i '/wyb\.pay\.query\.pay\.realNameCheck\.url/a\
+#wyb.pay.query.account.identity.status.url=https://epay.163.com/user_api/queryAccountIdentityStatus.htm' ${file}
+#    done
+#}
+
 function pros_add() {
     PROJECT_HOME=$1
-    for file in $(find $PROJECT_HOME/ -name 'pay.properties')
+    for file in $(find $PROJECT_HOME/ -name 'privateSettings.properties')
     do
         echo "File: ${file}"
-        sed -i '/wyb\.pay\.query\.pay\.realNameCheck\.url/a\
-wyb.pay.query.account.identity.status.url=https://epay.163.com/user_api/queryAccountIdentityStatus.htm' ${file}
+        sed -i '/ddb\.pass=/a\
+ddb.min_poolsize=5\
+ddb.max_poolsize=5\
+ddb.initial_poolsize=5\
+\
+ddb.url2=jdbc:mysql://10.120.152.132:6000/haitao-test?autoReconnect=true&failOverReadOnly=true\
+ddb.user2=haitao_read\
+ddb.pass2=haitao_read\
+ddb.min_poolsize_readonly=5\
+ddb.max_poolsize_readonly=5\
+ddb.initial_poolsize_readonly=5' ${file}
     done
 }
 

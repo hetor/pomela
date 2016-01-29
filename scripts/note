@@ -23,6 +23,7 @@ echo "${var[1]}, ${var[2]}, ${var[3]}"
 可以使用type -a查看
 
 登入提示：/etc/issue, /etc/motd
+自定义shell终端提示符: 修改环境变量：PS1
 
 login shell：取得bash 时需要完整的登入流程的，就称为login shell。举例来说，你要由tty1 ~ tty6 登入，需要输入使用者的帐号与密码，此时取得的bash 就称为『 login shell 』啰；
 1.整体环境设定档：/etc/profile(login shell才会读)：这是系统整体的设定，你最好不要修改这个档案；
