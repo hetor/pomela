@@ -16,38 +16,38 @@ DDB_IP=(1 hzbxs-haitao33)
 
 
 function ssh_test() {
-    echo "log-- ssh $CURRENT_USER@${TEST_IP[$1]} -p 1046"
-    test ${#TEST_IP[@]} -gt $1 && ssh $CURRENT_USER@${TEST_IP[$1]} -p 1046
+    echo "log-- ssh $CURRENT_USER@${TEST_IP[${1}]} -p 1046"
+    test ${#TEST_IP[@]} -gt ${1} && ssh $CURRENT_USER@${TEST_IP[${1}]} -p 1046
 }
 
 function ssh_pre() {
-    echo "log-- ssh $CURRENT_USER@${PRE_IP[$1]} -p 1046"
-    test ${#PRE_IP[@]} -gt $1 && ssh $CURRENT_USER@${PRE_IP[$1]} -p 1046
+    echo "log-- ssh $CURRENT_USER@${PRE_IP[${1}]} -p 1046"
+    test ${#PRE_IP[@]} -gt ${1} && ssh $CURRENT_USER@${PRE_IP[${1}]} -p 1046
 }
 
 function ssh_hotfix() {
-    echo "log-- ssh $CURRENT_USER@${HOTFIX_IP[$1]} -p 1046"
-    test ${#HOTFIX_IP[@]} -gt $1 && ssh $CURRENT_USER@${HOTFIX_IP[$1]} -p 1046
+    echo "log-- ssh $CURRENT_USER@${HOTFIX_IP[${1}]} -p 1046"
+    test ${#HOTFIX_IP[@]} -gt ${1} && ssh $CURRENT_USER@${HOTFIX_IP[${1}]} -p 1046
 }
 
 function ssh_integration() {
-    echo "log-- ssh $CURRENT_USER@${INTEGRATION_IP[$1]} -p 1046"
-    test ${#INTEGRATION_IP[@]} -gt $1 && ssh $CURRENT_USER@${INTEGRATION_IP[$1]} -p 1046
+    echo "log-- ssh $CURRENT_USER@${INTEGRATION_IP[${1}]} -p 1046"
+    test ${#INTEGRATION_IP[@]} -gt ${1} && ssh $CURRENT_USER@${INTEGRATION_IP[${1}]} -p 1046
 }
 
 function ssh_online_haitao() {
-    echo "log-- ssh ${ONLINE_HAITAO_IP[$1]}"
-    test ${#ONLINE_HAITAO_IP[@]} -gt $1 && ssh ${ONLINE_HAITAO_IP[$1]}
+    echo "log-- ssh ${ONLINE_HAITAO_IP[${1}]}"
+    test ${#ONLINE_HAITAO_IP[@]} -gt ${1} && ssh ${ONLINE_HAITAO_IP[${1}]}
 }
 
 function ssh_online_pay() {
-    echo "log-- ssh ${ONLINE_PAY_IP[$1]}"
-    test ${#ONLINE_PAY_IP[@]} -gt $1 && ssh ${ONLINE_PAY_IP[$1]}
+    echo "log-- ssh ${ONLINE_PAY_IP[${1}]}"
+    test ${#ONLINE_PAY_IP[@]} -gt ${1} && ssh ${ONLINE_PAY_IP[${1}]}
 }
 
 function ssh_online_dw() {
-    echo "log-- ssh ${ONLINE_DW_IP[$1]}"
-    test ${#ONLINE_DW_IP[@]} -gt $1 && ssh ${ONLINE_DW_IP[$1]}
+    echo "log-- ssh ${ONLINE_DW_IP[${1}]}"
+    test ${#ONLINE_DW_IP[@]} -gt ${1} && ssh ${ONLINE_DW_IP[${1}]}
 }
 
 function ssh_online_ddb() {
@@ -59,8 +59,8 @@ function ssh_online_ddb() {
 ENV='' #test,pre,hotfix,integration,online
 MODULE='' #haitao,pay,dw,ddb
 INDEX=0 #1,2,3...
-ERR_MSG=`basename $0`
-TIP="Usage: `basename $0` -e|--env env_params(t|p|h|i|o) [-m|--module module_params(ht|pay|dw|ddb)] [-i|--index index_params(1|2|3|...)]"
+ERR_MSG=`basename ${0}`
+TIP="Usage: `basename ${0}` -e|--env env_params(t|p|h|i|o) [-m|--module module_params(ht|pay|dw|ddb)] [-i|--index index_params(1|2|3|...)]"
 ARGS=`getopt -o e:m:i: --long env:,module:,index: -n "${ERR_MSG}" -- "$@"`
 
 if [ $? != 0 ]; then
@@ -68,11 +68,14 @@ if [ $? != 0 ]; then
     exit 1
 fi
 
-eval set -- "${ARGS}"
+eval `set -- "${ARGS}"`
+
+#echo '$ARGS: '$ARGS
+#echo '$@: '$@
 
 while true
 do
-    case "$1" in
+    case "${1}" in
         -e|--env)
             if [ "${2}" == "t" ] || [ "${2}" == "test" ]; then
                 ENV='test'
@@ -114,8 +117,8 @@ do
             break
             ;;
         *)
-            echo "Internal error!"
-            exit 1
+            shift
+            break
             ;;
     esac
 done
