@@ -7,107 +7,149 @@ ext {
     mockito_core:           '1.9.5',
     mx4j_tools:             '3.0.1',
     poi:                    '3.13',
+    curator:                '2.9.1',
+    slf4j:                  '1.7.16',
+    logback:                '1.1.5',
+    groovy:                 '2.4.5',
     ]
-
-
     libraries = [
 
-    //alibaba
-    alibaba_fastjson:       'com.alibaba:fastjson:1.2.7',
-    //commons
-    commons_beanutils:      'commons-beanutils:commons-beanutils:1.8.3',
-    commons_cli:            'commons-cli:commons-cli:1.2',
-    commons_collections:    'commons-collections:commons-collections:3.2.1',
-    commons_compress:       'org.apache.commons:commons-compress:1.5',
-    commons_configuration:  'commons-configuration:commons-configuration:1.9',
-    commons_dbcp:           'commons-dbcp:commons-dbcp:1.4',
-    commons_discovery:      'commons-discovery:commons-discovery:20040218.194635',
-    commons_fileupload:     'commons-fileupload:commons-fileupload:1.3',
-    commons_httpclient:     'commons-httpclient:commons-httpclient:3.1',
-    commons_id:             'org.littleshoot:littleshoot-commons-id:1.0.3',
-    commons_io:             'commons-io:commons-io:2.4',
-    commons_jexl:           'commons-jexl:commons-jexl:1.1',
-    commons_lang:           'commons-lang:commons-lang:2.6',
-    commons_lang3:          'org.apache.commons:commons-lang3:3.3.2',
-    commons_logging:        'commons-logging:commons-logging:1.1.2',
-    commons_net:            'commons-net:commons-net:3.2',
-    commons_pool:           'commons-pool:commons-pool:1.6',
+            //alibaba
+            alibaba_fastjson:       'com.alibaba:fastjson:1.2.7',
+            //commons
+            commons_beanutils:      'commons-beanutils:commons-beanutils:1.8.3',
+            commons_cli:            'commons-cli:commons-cli:1.2',
+            commons_collections:    'commons-collections:commons-collections:3.2.1',
+            commons_compress:       'org.apache.commons:commons-compress:1.5',
+            commons_configuration:  'commons-configuration:commons-configuration:1.9',
+            commons_dbcp:           'commons-dbcp:commons-dbcp:1.4',
+            commons_discovery:      'commons-discovery:commons-discovery:20040218.194635',
+            commons_fileupload:     'commons-fileupload:commons-fileupload:1.3',
+            commons_httpclient:     'commons-httpclient:commons-httpclient:3.1',
+            commons_id:             'org.littleshoot:littleshoot-commons-id:1.0.3',
+            commons_io:             'commons-io:commons-io:2.4',
+            commons_jexl:           'commons-jexl:commons-jexl:1.1',
+            commons_lang:           'commons-lang:commons-lang:2.6',
+            commons_lang3:          'org.apache.commons:commons-lang3:3.3.2',
+            commons_logging:        'commons-logging:commons-logging:1.1.2',
+            commons_net:            'commons-net:commons-net:3.2',
+            commons_pool:           'commons-pool:commons-pool:1.6',
 
-    // cglib
-    cglib_asm:              'cglib:cglib-asm:1.0',
-    cglib_nodep:            'cglib:cglib-nodep:2.1_3',
+            // cglib
+            cglib_asm:              'cglib:cglib-asm:1.0',
+            cglib_nodep:            'cglib:cglib-nodep:2.1_3',
 
-    // freemarker
-    freemarker:             'org.freemarker:freemarker:2.3.20',
+            // freemarker
+            freemarker:             'org.freemarker:freemarker:2.3.20',
 
-    // google
-    google_guava:           'com.google.guava:guava:18.0',
-    google_gson:            'com.google.code.gson:gson:2.4',
+            // google
+            google_guava:           'com.google.guava:guava:18.0',
+            google_gson:            'com.google.code.gson:gson:2.4',
 
-    // zookeeper
-    zkclient:               'com.github.adyliu:zkclient:2.1.1',
+            // groovy
+            groovy:                 "org.codehaus.groovy:groovy:${versions.groovy}",
+            groovy_all:             "org.codehaus.groovy:groovy-all:${versions.groovy}",
+            groovy_console:         "org.codehaus.groovy:groovy-console:${versions.groovy}",
+            groovy_jsr223:          "org.codehaus.groovy:groovy-jsr223:${versions.groovy}",
+            groovy_test:            "org.codehaus.groovy:groovy-test:${versions.groovy}",
 
-    // mx4j
-    mx4j_tools:             'mx4j:mx4j-tools:3.0.1',
+            // zookeeper
+            zookeeper:              'org.apache.zookeeper:zookeeper:3.4.6',
 
-    // mybatis
-    mybatis:                'org.mybatis:mybatis:3.2.5',
-    mybatis_ehcache:        'org.mybatis:mybatis-ehcache:1.0.0',
-    mybatis_spring:         'org.mybatis:mybatis-spring:1.2.2',
-    mybatis_generator:      'org.mybatis.generator:mybatis-generator-core:1.3.2',
-    mybatis_generator_plugins: 'net.javaforge.mybatis.generator:mybatis-generator-plugins:1.0.0',
+            zkclient:               'com.github.adyliu:zkclient:2.1.1',
 
-    //mysql
-    mysql_connector_java:    'mysql:mysql-connector-java:5.1.21',
+            curator_client:      	"org.apache.curator:curator-client:${versions.curator}",
+            curator_framework:      "org.apache.curator:curator-framework:${versions.curator}",
+            curator_recipes:        "org.apache.curator:curator-recipes:${versions.curator}",
+            curator_test:           "org.apache.curator:curator-test:${versions.curator}",
+            curator_examples:       "org.apache.curator:curator-examples:${versions.curator}",
+            curator_x_discovery:    "org.apache.curator:curator-x-discovery:${versions.curator}",
+            curator_x_discoveryserver: "org.apache.curator:curator-x-discoveryserver:${versions.curator}",
+            curator_x_rpc:          "org.apache.curator:curator-x-rpc:${versions.curator}",
 
-    //jackson
-    jackson_core:           'com.fasterxml.jackson.core:jackson-core:2.6.1',
-    jackson_annotations:    'com.fasterxml.jackson.core:jackson-annotations:2.6.1',
-    jackson_databind:       'com.fasterxml.jackson.core:jackson-databind:2.6.1',
 
-    //json-lib
-    json_lib:               'net.sf.json-lib:json-lib:2.4',
+            //logging logback
+            logback_classic:        "ch.qos.logback:logback-classic:${versions.logback}",
+            logback_core:           "ch.qos.logback:logback-core:${versions.logback}",
+            logback_access:         "ch.qos.logback:logback-access:${versions.logback}",
 
-    //junit
-    junit:                  'junit:junit:4.11',
+            //logging frameworks
+            slf4j_api:              "org.slf4j:slf4j-api:${versions.slf4j}",
+            slf4j_simple:           "org.slf4j:slf4j-simple:${versions.slf4j}",
+            slf4j_nop:              "org.slf4j:slf4j-nop:${versions.slf4j}",
 
-    //jedis
-    jedis:                  'redis.clients:jedis:2.6.2',
+            //logging bridges
+            jcl_over_slf4j:         "org.slf4j:jcl-over-slf4j:${versions.slf4j}", //Apache Commons Logging（之前叫 Jakarta Commons Logging，JCL）
+            slf4j_jdk14:            "org.slf4j:slf4j-jdk14:${versions.slf4j}",
+            log4j_over_slf4j:       "org.slf4j:log4j-over-slf4j:${versions.slf4j}",
+            jul_to_slf4j:           "org.slf4j:jul-to-slf4j:${versions.slf4j}", //java.util.logging
+            sysout_over_slf4j:      "org.slf4j:sysout-over-slf4j:${versions.slf4j}",
+            slf4j_log4j12:          "org.slf4j:slf4j-log4j12:${versions.slf4j}",
+            slf4j_jcl:              "org.slf4j:slf4j-jcl:${versions.slf4j}",
 
-    //poi
-    poi:                    "org.apache.poi:poi:${versions.poi}",
-    poi_ooxml:              "org.apache.poi:poi-ooxml:${versions.poi}",
-    poi_scratchpad:         "org.apache.poi:poi-scratchpad:${versions.poi}",
+            // mx4j
+            mx4j_tools:             'mx4j:mx4j-tools:3.0.1',
 
-    //rabbit
-    rabbitmq:               'com.rabbitmq:amqp-client:3.1.4',
-    spring_rabbit:          'org.springframework.amqp:spring-rabbit:1.3.2.RELEASE',
+            // mybatis
+            mybatis:                'org.mybatis:mybatis:3.2.5',
+            mybatis_ehcache:        'org.mybatis:mybatis-ehcache:1.0.0',
+            mybatis_spring:         'org.mybatis:mybatis-spring:1.2.2',
+            mybatis_generator:      'org.mybatis.generator:mybatis-generator-core:1.3.2',
+            mybatis_generator_plugins: 'net.javaforge.mybatis.generator:mybatis-generator-plugins:1.0.0',
 
-    // spring
-    spring_agent:           'org.springframework:spring-agent:2.5.6',
-    spring_aop:             "org.springframework:spring-aop:${versions.spring}",
-    spring_aspects:         "org.springframework:spring-aspects:${versions.spring}",
-    spring_context:         "org.springframework:spring-context:${versions.spring}",
-    spring_context_support: "org.springframework:spring-context-support:${versions.spring}",
-    spring_expression:      "org.springframework:spring-expression:${versions.spring}",
-    spring_instrument:      "org.springframework:spring-instrument:${versions.spring}",
-    spring_jdbc:            "org.springframework:spring-jdbc:${versions.spring}",
-    spring_orm:             "org.springframework:spring-orm:${versions.spring}",
-    spring_test:            "org.springframework:spring-test:${versions.spring}",
-    spring_tx:              "org.springframework:spring-tx:${versions.spring}",
-    spring_web:             "org.springframework:spring-web:${versions.spring}",
-    spring_webmvc:          "org.springframework:spring-webmvc:${versions.spring}",
-    spring_beans:           "org.springframework:spring-beans:${versions.spring}",
-    spring_core:            "org.springframework:spring-core:${versions.spring}",
-    spring_data_redis:      "org.springframework.data:spring-data-redis:1.5.1.RELEASE",
-    
-    //servlet 
-    servlet_api:            "javax.servlet:javax.servlet-api:3.1.0",
+            //mysql
+            mysql_connector_java:    'mysql:mysql-connector-java:5.1.21',
 
-    //hamcrest
-    hamcrest_core:          "org.hamcrest:hamcrest-core:${versions.hamcrest_core}",
+            //jackson
+            jackson_core:           'com.fasterxml.jackson.core:jackson-core:2.6.1',
+            jackson_annotations:    'com.fasterxml.jackson.core:jackson-annotations:2.6.1',
+            jackson_databind:       'com.fasterxml.jackson.core:jackson-databind:2.6.1',
 
-    //mockito
-    mockito_core:           "org.mockito:mockito-core:${versions.mockito_core}",    
+            //json-lib
+            json_lib:               'net.sf.json-lib:json-lib:2.4',
+
+            //junit
+            junit:                  'junit:junit:4.11',
+
+            //jedis
+            jedis:                  'redis.clients:jedis:2.6.2',
+
+            //poi
+            poi:                    "org.apache.poi:poi:${versions.poi}",
+            poi_ooxml:              "org.apache.poi:poi-ooxml:${versions.poi}",
+            poi_scratchpad:         "org.apache.poi:poi-scratchpad:${versions.poi}",
+
+            //rabbit
+            rabbitmq:               'com.rabbitmq:amqp-client:3.1.4',
+            spring_rabbit:          'org.springframework.amqp:spring-rabbit:1.3.2.RELEASE',
+
+            // spring
+            spring_agent:           'org.springframework:spring-agent:2.5.6',
+            spring_aop:             "org.springframework:spring-aop:${versions.spring}",
+            spring_aspects:         "org.springframework:spring-aspects:${versions.spring}",
+            spring_context:         "org.springframework:spring-context:${versions.spring}",
+            spring_context_support: "org.springframework:spring-context-support:${versions.spring}",
+            spring_expression:      "org.springframework:spring-expression:${versions.spring}",
+            spring_instrument:      "org.springframework:spring-instrument:${versions.spring}",
+            spring_jdbc:            "org.springframework:spring-jdbc:${versions.spring}",
+            spring_orm:             "org.springframework:spring-orm:${versions.spring}",
+            spring_test:            "org.springframework:spring-test:${versions.spring}",
+            spring_tx:              "org.springframework:spring-tx:${versions.spring}",
+            spring_web:             "org.springframework:spring-web:${versions.spring}",
+            spring_webmvc:          "org.springframework:spring-webmvc:${versions.spring}",
+            spring_beans:           "org.springframework:spring-beans:${versions.spring}",
+            spring_core:            "org.springframework:spring-core:${versions.spring}",
+            spring_data_redis:      "org.springframework.data:spring-data-redis:1.5.1.RELEASE",
+
+            //servlet
+            servlet_api:            "javax.servlet:javax.servlet-api:3.1.0",
+
+            //hamcrest
+            hamcrest_core:          "org.hamcrest:hamcrest-core:${versions.hamcrest_core}",
+
+            //mockito
+            mockito_core:           "org.mockito:mockito-core:${versions.mockito_core}",
     ]
+
+
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<jmxConfigurator />
+
+	<!--<include resource="logback-basic-config.xml"/>-->
+
+	<!--<appender name="login" class="ch.qos.logback.classic.db.DBAppender">-->
+		<!--<filter class="com.travelzen.framework.logger.filter.MessagePrefixFilter">-->
+			<!--<prefix>[TOPS_LOGIN]</prefix>-->
+			<!--<onMatch>ACCEPT</onMatch>-->
+			<!--<onMismatch>DENY</onMismatch>-->
+		<!--</filter>-->
+		<!--<connectionSource class="com.travelzen.tops.member.authorization.logback.TZDriverManagerConnectionSource"/>-->
+	<!--</appender>-->
+
+	<!--<appender name="async-login" class="ch.qos.logback.classic.AsyncAppender">-->
+		<!--<discardingThreshold>0</discardingThreshold>-->
+		<!--<queueSize>100</queueSize>-->
+		<!--<appender-ref ref="login" />-->
+	<!--</appender>-->
+
+	<!--<logger name="com.travelzen.tops.member.authorization" level="info">-->
+		<!--<appender-ref ref="async-login" />-->
+	<!--</logger>-->
+
+	<!-- 控制台日志输出 -->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<Encoding>UTF-8</Encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{HH:mm:ss} |%5le| %logger{50} => %X{rpid} %msg %n%ex</pattern>
+		</layout>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="stdout" />
+	</root>
+
+</configuration>

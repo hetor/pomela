@@ -1,0 +1,9 @@
+dependencies{
+    compile libraries.zookeeper
+    compile libraries.curator_framework
+    compile libraries.curator_client
+    compile libraries.curator_recipes
+    compile libraries.curator_examples
+
+    compile project(':pomela-common:pomela-common-logger')
+}

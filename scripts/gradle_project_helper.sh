@@ -1,3 +1,5 @@
+#eg: ./gradle_project_helper.sh pomela-project pomela-project-module
+
 #!/bin/sh
 PROJECT_NAME=$1      #'pomela-project'
 MODULE_NAME=$2       #'pomela-project-module'

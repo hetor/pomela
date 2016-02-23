@@ -1,1 +1,2 @@
 include 'pomela-zookeeper:pomela-zookeeper-common'
+include 'pomela-zookeeper:pomela-zookeeper-curator'
