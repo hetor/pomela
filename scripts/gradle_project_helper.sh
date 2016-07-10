@@ -3,7 +3,7 @@
 #!/bin/sh
 PROJECT_NAME=$1      #'pomela-project'
 MODULE_NAME=$2       #'pomela-project-module'
-WEB_APP=N
+WEB_APP=Y
 
 if [ -n "$PROJECT_NAME" ]; then
     echo "project name: $PROJECT_NAME"

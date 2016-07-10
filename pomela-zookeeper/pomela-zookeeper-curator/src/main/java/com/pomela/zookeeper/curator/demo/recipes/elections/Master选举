@@ -1,0 +1,6 @@
+实现大体思路:
+选择一个根节点,例如/master_select, 多台机器同时向该节点创建一个子节点/master_select/lock,
+利用Zookeeper的特性,最终只有一台机器能够创建成功,成功的那台机器就作为Master.
+Curator也是基于这个思路,但是它将节点创建,事件监听和自动选举过程进行了封装.
+
+/pomela/curator_recipes_master_path/_c_c49ae549-a22d-4ac9-bc29-75614956ba6c-lock-0000000035

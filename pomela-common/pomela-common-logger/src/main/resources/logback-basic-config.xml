@@ -138,5 +138,9 @@
 	<logger name="org.apache.zookeeper.ClientCnxn" level="debug" additivity="false">
 		<appender-ref ref="zk-debug-file" />
 	</logger>
+
+	<logger name="org.springframework" level="debug" additivity="false">
+		<appender-ref ref="async-debug-file"/>
+	</logger>
 	
 </included>

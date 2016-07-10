@@ -1,0 +1,80 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <rabbit:connection-factory id="connectionFactory"  addresses="${msg.rabbitmq.server}" virtual-host="${msg.rabbitmq.vhost}"
+                               username="${msg.rabbitmq.user}" password="${msg.rabbitmq.password}" cache-mode="CHANNEL" channel-cache-size="10"/>
+
+    <rabbit:admin id="msgAdmin" connection-factory="connectionFactory" auto-startup="true" />
+
+    <!-- 死信队列配置 -->
+    <rabbit:queue name="ha.queue.dead.letter.queue" declared-by="msgAdmin"/>
+    <rabbit:direct-exchange name="ha.exchange.direct.dead.letter">
+        <rabbit:bindings>
+            <rabbit:binding key="dl.rk" queue="ha.queue.dead.letter.queue"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- 队列配置 -->
+    <rabbit:queue name="ha.queue.work.task.with.dl.t" declared-by="msgAdmin">
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="ha.exchange.direct.dead.letter"/>
+            <entry key="x-dead-letter-routing-key" value="dl.rk" />
+            <entry key="x-message-ttl" value="60000" value-type="java.lang.Long"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:queue name="ha.queue.work.task.with.dl" declared-by="msgAdmin">
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="ha.exchange.direct.dead.letter"/>
+            <entry key="x-dead-letter-routing-key" value="dl.rk" />
+            <entry key="x-message-ttl" value="10000" value-type="java.lang.Long"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- topic exchange -->
+    <rabbit:topic-exchange name="ha.exchange.topic.task" declared-by="msgAdmin">
+        <rabbit:bindings>
+            <rabbit:binding queue="ha.queue.work.task.with.dl" pattern="msg.pay.callback.*"/>
+            <rabbit:binding queue="ha.queue.work.task.with.dl.t" pattern="msg.pay.callback.t.*"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <!-- 队列配置 -->
+    <rabbit:queue name="ha.queue.pay.callback.succPay" declared-by="msgAdmin">
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="ha.exchange.direct.dead.letter"/>
+            <entry key="x-dead-letter-routing-key" value="dl.rk" />
+            <entry key="x-message-ttl" value="60000" value-type="java.lang.Long"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:queue name="ha.queue.pay.callback.pushOrderExt" declared-by="msgAdmin">
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="ha.exchange.direct.dead.letter"/>
+            <entry key="x-dead-letter-routing-key" value="dl.rk" />
+            <entry key="x-message-ttl" value="60000" value-type="java.lang.Long"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:queue name="ha.queue.pay.callback.calcDivide" declared-by="msgAdmin">
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="ha.exchange.direct.dead.letter"/>
+            <entry key="x-dead-letter-routing-key" value="dl.rk" />
+            <entry key="x-message-ttl" value="60000" value-type="java.lang.Long"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+
+    <!-- fanout exchange -->
+    <rabbit:fanout-exchange name="ha.exchange.fanout.pay" declared-by="msgAdmin">
+        <rabbit:bindings>
+            <rabbit:binding queue="ha.queue.pay.callback.succPay"></rabbit:binding>
+            <rabbit:binding queue="ha.queue.pay.callback.pushOrderExt"></rabbit:binding>
+            <rabbit:binding queue="ha.queue.pay.callback.calcDivide"></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
+
+
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
+    <rabbit:template id="payTopicTemplate" connection-factory="connectionFactory" message-converter="jsonMessageConverter" exchange="ha.exchange.topic.task" confirm-callback=""/>
+    <rabbit:template id="payFanoutTemplate" connection-factory="connectionFactory" message-converter="jsonMessageConverter" exchange="ha.exchange.fanout.pay"/>
+
+</beans>

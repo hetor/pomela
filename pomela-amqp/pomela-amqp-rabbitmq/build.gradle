@@ -1,3 +1,9 @@
+apply plugin: 'war'
+
 dependencies {
-	compile libraries.rabbitmq
+	compile libraries.spring_rabbit
+	compile libraries.jackson_mapper_asl
+	compile project(':pomela-common:pomela-common-logger')
+	compile project(':pomela-common:pomela-common-front')
+	compile project(':pomela-spring:pomela-spring-base')
 }

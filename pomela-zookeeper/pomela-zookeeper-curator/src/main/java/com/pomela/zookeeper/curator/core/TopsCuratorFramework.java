@@ -60,8 +60,8 @@ public class TopsCuratorFramework {
 			if(childNodes != null)
 				return childNodes;
 			childNodes = new ArrayList<>();
-			for(String childNodePath : listPaths(path)){
-				childNodes.add(new Node(path + "/" + childNodePath));
+			for(String childpath : listPaths(path)){
+				childNodes.add(new Node(path + "/" + childpath));
 			}
 			return childNodes;
 		}
@@ -116,16 +116,20 @@ public class TopsCuratorFramework {
 //		if (StringUtil.isEmpty(connectionString))
 //			return;
 //		connectionString = connectionString.trim();
-		String connectionString = "10.240.139.162:2181,10.240.137.153:2181,10.240.139.113:2181";
+		//192.168.1.117:2181,192.168.1.118:2181,192.168.1.119:2181
+		//10.240.139.162:2181,10.240.137.153:2181,10.240.139.113:2181
+		String connectionString = "192.168.1.117:2181,192.168.1.118:2181,192.168.1.119:2181";
 		try {
 			RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
 
 			//make canReadOnly to improve available
-			client = CuratorFrameworkFactory.builder().canBeReadOnly(true)//
+			client = CuratorFrameworkFactory.builder()
+					.canBeReadOnly(true)
 					.connectString(connectionString)
 					.sessionTimeoutMs(10 * 1000)
 					.connectionTimeoutMs(10 * 1000)
 					.retryPolicy(retryPolicy)
+					.namespace("pomela")
 					.build();
 
 			try {
@@ -190,6 +194,12 @@ public class TopsCuratorFramework {
 		}
 	}
 
+	private void assertPath(String path) {
+		if (TZUtil.isEmpty(path)) {
+			throw new IllegalStateException("path is empty");
+		}
+	}
+
 	/**
 	 * 增加连接状态监听器
 	 * 
@@ -205,29 +215,29 @@ public class TopsCuratorFramework {
 		RPIDLogger.info("ConnectionStateListener added");
 	}
 
-	public PathChildrenCache addPathChildrenCache(String nodePath) {
+	public PathChildrenCache addPathChildrenCache(String path) {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath))
-			throw new IllegalStateException("nodePath is null");
-		PathChildrenCache pathChildrenCache = new PathChildrenCache(client, nodePath, true);
+		assertPath(path);
+
+		PathChildrenCache pathChildrenCache = new PathChildrenCache(client, path, true);
 		return pathChildrenCache;
 	}
 
 	/**
 	 * 删除某个节点
 	 * 
-	 * @param nodePath
+	 * @param path
 	 * @throws Exception
 	 */
-	public void deleteNode(String nodePath) throws Exception {
+	public void deleteNode(String path) throws Exception {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath)) {
-			throw new IllegalStateException("nodePath is empty");
-		}
-		Stat stat = exists(nodePath);
+		assertPath(path);
+
+		Stat stat = exists(path);
 		if (stat != null) {
-			RPIDLogger.info("delete -- > {}", nodePath);
-			client.delete().forPath(nodePath);
+			RPIDLogger.info("delete -- > {}", path);
+			//.withVersion()
+			client.delete().guaranteed().deletingChildrenIfNeeded().forPath(path);
 		}
 	}
 
@@ -235,20 +245,19 @@ public class TopsCuratorFramework {
 	 * 删除所有文件
 	 * deleteChildrenNode ???
 	 */
-	public void deleteNodesFromPath(String nodePath) throws Exception {
+	public void deleteNodesFromPath(String path) throws Exception {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath)) {
-			throw new IllegalStateException("nodePath is empty");
-		}
-		Stat stat = exists(nodePath);
+		assertPath(path);
+
+		Stat stat = exists(path);
 		if (stat != null) {
-			List<String> listPaths = listPaths(nodePath);
+			List<String> listPaths = listPaths(path);
 			if (!TZUtil.isEmpty(listPaths)) {
-				for (String path : listPaths) {
-					deleteNodesFromPath(nodePath + File.separator + path);
+				for (String p : listPaths) {
+					deleteNodesFromPath(path + File.separator + p);
 				}
 			}
-			deleteNode(nodePath);
+			deleteNode(path);
 		}
 	}
 
@@ -262,21 +271,21 @@ public class TopsCuratorFramework {
 	 * PERSISTENT_SEQUENTIAL：结合PERSISTENT和SEQUENTIAL
 	 * 
 	 * EPHEMERAL_SEQUENTIAL：结合EPHEMERAL和SEQUENTIAL
+	 *
+	 * 非叶子节点必须是持久节点
 	 * 
-	 * @param nodePath
+	 * @param path
 	 * @param data
 	 * @param mode
 	 * @throws Exception
 	 */
-	public void createNode(String nodePath, byte[] data, CreateMode mode) throws Exception {
+	public void createNode(String path, byte[] data, CreateMode mode) throws Exception {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath)) {
-			throw new IllegalStateException("nodePath is empty");
-		}
+		assertPath(path);
 		if (TZUtil.isEmpty(mode)) {
 			throw new IllegalStateException("mode is empty");
 		}
-		client.create().creatingParentsIfNeeded().withMode(mode).forPath(nodePath, data);
+		client.create().creatingParentsIfNeeded().withMode(mode).forPath(path, data);
 	}
 
 	/**
@@ -284,57 +293,76 @@ public class TopsCuratorFramework {
 	 * 
 	 * @throws Exception
 	 */
-	public byte[] getData(String nodePath) throws Exception {
+	public byte[] getData(String path) throws Exception {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath)) {
-			throw new IllegalStateException("nodePath is empty");
+		assertPath(path);
+		return client.getData().forPath(path);
+	}
+
+	/**
+	 * 获得数据
+	 *
+	 * @throws Exception
+	 */
+	public byte[] getData(String path, Stat stat) throws Exception {
+		assertClient();
+		assertPath(path);
+		if(null == stat) {
+			throw new IllegalArgumentException("stat must not be null");
 		}
-		return client.getData().forPath(nodePath);
+		return client.getData().storingStatIn(stat).forPath(path);
+	}
+
+	public Stat updateNode(String path, byte[] data, Stat stat) throws Exception {
+		assertClient();
+		assertPath(path);
+		if(null == stat) {
+			throw new IllegalArgumentException("stat must not be null");
+		}
+
+		return client.setData().withVersion(stat.getVersion()).forPath(path, data);
 	}
 
 
 
-
-	public Stat exists(String nodePath) throws Exception {
-		return exists(nodePath, null);
+	public Stat exists(String path) throws Exception {
+		return exists(path, null);
 	}
 
 	/**
 	 * 检查节点 采用一个watcher
 	 * 
-	 * @param nodePath
+	 * @param path
 	 * @param watcher
 	 * @return
 	 * @throws Exception
 	 */
-	public Stat exists(String nodePath, CuratorWatcher watcher) throws Exception {
+	public Stat exists(String path, CuratorWatcher watcher) throws Exception {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath)) {
-			throw new IllegalStateException("nodePath is empty");
-		}
+		assertPath(path);
+
 		if (TZUtil.isEmpty(watcher)) {
-			return client.checkExists().forPath(nodePath);
+			return client.checkExists().forPath(path);
 		} else {
-			return client.checkExists().usingWatcher(watcher).forPath(nodePath);
+			return client.checkExists().usingWatcher(watcher).forPath(path);
 		}
 	}
 
 	/**
 	 * 检查节点 采用一个watcher
 	 * 
-	 * @param nodePath
+	 * @param path
 	 * @return
 	 * @throws Exception
 	 */
-	public List<String> listPaths(String nodePath) throws Exception {
+	public List<String> listPaths(String path) throws Exception {
 		assertClient();
-		if (TZUtil.isEmpty(nodePath)) {
-			throw new IllegalStateException("nodePath is empty");
+		assertPath(path);
+
+		if (path.length() > 2 && path.endsWith("/")) {
+			path = path.substring(0, path.length() - 1);
 		}
-		if (nodePath.length() > 2 && nodePath.endsWith("/")) {
-			nodePath = nodePath.substring(0, nodePath.length() - 1);
-		}
-		List<String> list = client.getChildren().forPath(nodePath);
+		List<String> list = client.getChildren().forPath(path);
 		if (!TZUtil.isEmpty(list)) {
 			Collections.sort(list, new Comparator<String>() {
 
@@ -350,13 +378,13 @@ public class TopsCuratorFramework {
 	
 	/**
 	 * 获取所有的叶子节点
-	 * @param nodePath
+	 * @param path
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Node> getAllLeafNodes(String nodePath) throws Exception{
+	public List<Node> getAllLeafNodes(String path) throws Exception{
 		List<Node> allNodes = new ArrayList<>();
-		Node parentNode = new Node(nodePath);
+		Node parentNode = new Node(path);
 		for(Node childNode : parentNode.getChildNodes()){
 			if(childNode.isLeafNode())
 				allNodes.add(childNode);

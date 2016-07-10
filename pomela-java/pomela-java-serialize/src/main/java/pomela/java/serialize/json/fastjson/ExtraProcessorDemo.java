@@ -17,7 +17,7 @@ public class ExtraProcessorDemo {
         CommRet commRet = FastJsonUtil.fromJson("{\"id\":123,\"name\":\"abc\"}", CommRet.class, new ExtraProcessor() {
             public void processExtra(Object object, String key, Object value) {
                 CommRet vo = (CommRet) object;
-                vo.getExtras().put(key, value);
+                vo.getData().put(key, value);
             }
         });
         PrintUtil.toConsole(FastJsonUtil.toJson(commRet));
@@ -31,7 +31,7 @@ public class ExtraProcessorDemo {
 class MyExtraProcessor implements ExtraProcessor, ExtraTypeProvider {
     public void processExtra(Object object, String key, Object value) {
         CommRet vo = (CommRet) object;
-        vo.getExtras().put(key, value);
+        vo.getData().put(key, value);
     }
 
     public Type getExtraType(Object object, String key) {

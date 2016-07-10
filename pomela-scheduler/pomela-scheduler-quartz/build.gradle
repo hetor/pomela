@@ -1,0 +1,9 @@
+apply plugin: 'war'
+
+dependencies{
+    compile libraries.quartz
+    compile libraries.freemarker
+
+    compile project(':pomela-common:pomela-common-logger')
+    compile project(':pomela-spring:pomela-spring-base')
+}

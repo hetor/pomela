@@ -1,0 +1,5 @@
+dependencies{
+    compile libraries.servlet_api
+    compile libraries.freemarker
+    compile libraries.spring_webmvc
+}

@@ -11,4 +11,5 @@ debug:
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <jmxConfigurator/>
     <include resource="logback-basic-config.xml"/>
+    <!--<include resource="logback-console.xml"/>-->
 </configuration>

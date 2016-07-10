@@ -1,0 +1,6 @@
+dependencies{
+    compile libraries.commons_beanutils
+    compile libraries.commons_lang3
+    compile libraries.google_guava
+    compile libraries.alibaba_fastjson
+}

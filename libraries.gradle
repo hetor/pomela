@@ -101,6 +101,9 @@ ext {
             mysql_connector_java:    'mysql:mysql-connector-java:5.1.21',
 
             //jackson
+            jackson_core_asl:       'org.codehaus.jackson:jackson-core-asl:1.9.12',
+            jackson_mapper_asl:     'org.codehaus.jackson:jackson-mapper-asl:1.9.12',
+
             jackson_core:           'com.fasterxml.jackson.core:jackson-core:2.6.1',
             jackson_annotations:    'com.fasterxml.jackson.core:jackson-annotations:2.6.1',
             jackson_databind:       'com.fasterxml.jackson.core:jackson-databind:2.6.1',
@@ -118,6 +121,10 @@ ext {
             poi:                    "org.apache.poi:poi:${versions.poi}",
             poi_ooxml:              "org.apache.poi:poi-ooxml:${versions.poi}",
             poi_scratchpad:         "org.apache.poi:poi-scratchpad:${versions.poi}",
+
+            //quartz
+            quartz:                 "org.quartz-scheduler:quartz:2.2.2",
+
 
             //rabbit
             rabbitmq:               'com.rabbitmq:amqp-client:3.1.4',

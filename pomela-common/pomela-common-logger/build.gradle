@@ -3,4 +3,5 @@ dependencies{
     compile libraries.slf4j_api
     compile libraries.groovy_all
     compile libraries.sysout_over_slf4j
+    compile project(':pomela-common:pomela-common-base')
 }

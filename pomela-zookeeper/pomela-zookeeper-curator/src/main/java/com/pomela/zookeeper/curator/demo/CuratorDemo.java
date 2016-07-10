@@ -25,7 +25,7 @@ public class CuratorDemo {
                 .canBeReadOnly(true)
                 .connectString("10.240.139.162:2181,10.240.137.153:2181,10.240.139.113:2181")
                 .sessionTimeoutMs(10 * 1000)
-                .connectionTimeoutMs(10 * 1000)
+                .connectionTimeoutMs(10 * 1000) //连接创建超时时间
                 .retryPolicy(retryPolicy)
                 .build();
 
@@ -59,6 +59,9 @@ public class CuratorDemo {
 
             //delete if exist
             if(null != stat) {
+//                client.delete().forPath(path);
+//                client.delete().withVersion(stat.getVersion()).forPath(path); //强制指定版本进行删除
+//                client.delete().guaranteed().forPath(path); //curator引入失败重试机制,只要客户端会话有效,会重试直到删除成功
                 client.delete().deletingChildrenIfNeeded().forPath(path);
             }
 
@@ -69,7 +72,13 @@ public class CuratorDemo {
 
             //get data
             byte[] data = client.getData().forPath(path);
+//            Stat stat1 = new Stat();
+//            byte[] bytes = client.getData().storingStatIn(stat1).forPath(path); //同时获取该节点stat
             RPIDLogger.info("get path data: {}", new String(data, "UTF-8"));
+
+            //set date
+            client.setData().forPath(path);
+//            client.setData().withVersion(stat.getVersion()).forPath(path); //强制指定版本进行更新
         } catch (Exception e) {
             RPIDLogger.error(e);
         }

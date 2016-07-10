@@ -1,0 +1,18 @@
+dependencies{
+    compile libraries.spring_agent
+    compile libraries.spring_aop
+    compile libraries.spring_aspects
+    compile libraries.spring_context
+    compile libraries.spring_context_support
+    compile libraries.spring_expression
+    compile libraries.spring_instrument
+    compile libraries.spring_jdbc
+    compile libraries.spring_orm
+    compile libraries.spring_test
+    compile libraries.spring_tx
+    compile libraries.spring_web
+    compile libraries.spring_webmvc
+    compile libraries.spring_beans
+    compile libraries.spring_core
+    compile libraries.spring_data_redis
+}

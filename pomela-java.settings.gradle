@@ -7,3 +7,4 @@ include 'pomela-java:pomela-java-io'
 include 'pomela-java:pomela-java-serialize'
 
 
+include 'pomela-java:pomela-java-reflection'

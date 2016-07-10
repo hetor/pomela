@@ -1,1 +1,3 @@
 include 'pomela-common:pomela-common-logger'
+include 'pomela-common:pomela-common-base'
+include 'pomela-common:pomela-common-front'
