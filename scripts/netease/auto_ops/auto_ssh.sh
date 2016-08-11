@@ -8,10 +8,11 @@ CURRENT_USER="tao.he"
 TEST_IP=(19 223.252.220.20 223.252.220.185 223.252.220.187 223.252.220.184 223.252.220.70 223.252.220.125 106.2.44.22 223.252.220.212 223.252.220.188 223.252.220.208 106.2.44.21 106.2.44.36 106.2.44.37 106.2.44.38 106.2.44.39 106.2.44.40 106.2.44.41 106.2.44.42 106.2.44.43)
 INTEGRATION_IP=(1 223.252.220.198)
 HOTFIX_IP=(1 223.252.220.183)
-PRE_IP=(5 binjiang-haitao5 classa-haitao44 106.2.33.38 106.2.33.4 binjiang-haitao13) #binjiang-haitao13 is also pre2
+PRE_IP=(7 binjiang-haitao5 binjiang-haitao13 106.2.33.38 106.2.33.4 hzaxs-haitao-pre5 hzaxs-haitao-pre6) 
 ONLINE_HAITAO_IP=(9 binjiang-haitao1 binjiang-haitao2 hzabj-haitao-haitao1 hzabj-haitao-haitao2 hzaxs-haitao-haitao1 hzaxs-haitao-haitao2 classa-haitao1 classa-haitao2 classa-haitao11)
 ONLINE_PAY_IP=(4 hzabj-haitao-pay1 hzabj-haitao-pay2 hzaxs-haitao-pay1 hzaxs-haitao-pay2)
 ONLINE_DW_IP=(2 classa-haitao24 classa-haitao25)
+ONLINE_PRE_IP=(2 hzaxs-haitao-pre5 hzaxs-haitao-pre6)
 DDB_IP=(1 hzbxs-haitao33)
 
 
@@ -55,6 +56,10 @@ function ssh_online_ddb() {
     test ${#DDB_IP[@]} -gt 1 && ssh ${DDB_IP[1]}
 }
 
+function ssh_online_pre() {
+    echo "log-- ssh ${ONLINE_PRE_IP[${1}]}"
+    test ${#ONLINE_PRE_IP[@]} -gt ${1} && ssh ${ONLINE_PRE_IP[${1}]}
+}
 
 ENV='' #test,pre,hotfix,integration,online
 MODULE='' #haitao,pay,dw,ddb
@@ -63,8 +68,7 @@ ERR_MSG=`basename ${0}`
 TIP="Usage: `basename ${0}` -e|--env env_params(t|p|h|i|o) [-m|--module module_params(ht|pay|dw|ddb)] [-i|--index index_params(1|2|3|...)]"
 ARGS=`getopt -o e:m:i: --long env:,module:,index: -n "${ERR_MSG}" -- "$@"`
 
-if [ $? != 0 ]; then
-    echo ${TIP}
+if [ $? != 0 ]; then echo ${TIP}
     exit 1
 fi
 
@@ -102,6 +106,8 @@ do
                 MODULE='dw'
             elif [ "${2}" == "ddb" ] || [ "${2}" == "DDB" ]; then
                 MODULE='ddb'
+	    elif [ "${2}" == "pre" ] || [ "${2}" == "PRE" ]; then
+	        MODULE='pre'
             else
                 echo ${TIP}
                 exit 1

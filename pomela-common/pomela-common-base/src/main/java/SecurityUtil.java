@@ -45,7 +45,7 @@ public class SecurityUtil {
 		SecureRandom sr = new SecureRandom();
 		Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 		Key securekey = getSecretKey(key);
-		cipher.init(Cipher.DECRYPT_MODE, securekey,sr);
+		cipher.init(Cipher.DECRYPT_MODE, securekey, sr);
 		byte[] res = new BASE64Decoder().decodeBuffer(message);
 		res = cipher.doFinal(res);
 		return new String(res);
@@ -62,8 +62,10 @@ public class SecurityUtil {
 		System.out.println("decrypted message is below :");
 		System.out.println(decryptedMsg);
 
-		System.out.println(detryptA("wKLUBKml5ffc46nNYtcMma+NlmtpOCjp4CKZjQ1BOV8=", "sC7DrTal6QIDAQAB"));
-		System.out.println(detryptA("OLX/c/iw6mSVIrsCuDHYuTtbYIA5n6XBAM4JvFOFbZc=", "A1m3UI+7KwIDAQAB"));
+		System.out.println(detryptA("xsLWry+/2SntqSOmSEXEImWE8hU3PQ40Wa8quz4ATzc=", "sC7DrTal6QIDAQAB"));
+		System.out.println(detryptA("gVTpqUVXbE0zFqdjrtoo9p1+Tmm7XyhS0kWSW5FvVgQ=", "A1m3UI+7KwIDAQAB"));
+
+		System.out.println("5035^laotest100044@163.com^胡彬^0.01^F^RECEIVE_ACCOUNT_ERROR^201603030062132725^20160303151614".contains("^"));
 	}
 
 	public static String EncryptA(String sSrc, String sKey) throws Exception {
