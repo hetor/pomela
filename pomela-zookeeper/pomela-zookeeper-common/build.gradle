@@ -1,2 +1,4 @@
 dependencies{
+    compile libraries.zookeeper
+    compile project(':pomela-common:pomela-common-logger')
 }

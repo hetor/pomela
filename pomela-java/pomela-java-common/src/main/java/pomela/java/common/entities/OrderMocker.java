@@ -1,7 +1,5 @@
 package pomela.java.common.entities;
 
-import pomela.java.common.date.DateFormatUtils;
-import pomela.java.common.date.DatePattern;
 import pomela.java.common.utils.RandomUtil;
 
 import java.util.*;
@@ -17,7 +15,7 @@ public class OrderMocker implements EntityMocker<Order, String> {
 		long now = nowDate.getTime();
 
 		Order order = new Order();
-		order.setOutId(DateFormatUtils.toStr(nowDate, DatePattern.PATTERN_5) + RandomUtil.getNumbers(5, true));
+//		order.setOutId(DateFormatUtils.toStr(nowDate, DatePattern.PATTERN_5) + RandomUtil.getNumbers(5, true));
 		order.setCreateTime(nowDate);
 		order.setUpdateTime(now);
 		order.setTitle("title_" + RandomUtil.getNumbers(3, false));
