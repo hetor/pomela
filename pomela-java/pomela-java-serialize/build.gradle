@@ -10,5 +10,7 @@ dependencies {
     compile libraries.poi_ooxml
     compile libraries.poi_scratchpad
 
+    compile libraries.hessian
+
     compile project(':pomela-java:pomela-java-common')
 }

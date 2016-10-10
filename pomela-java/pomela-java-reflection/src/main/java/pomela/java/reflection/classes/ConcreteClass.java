@@ -10,6 +10,7 @@ public class ConcreteClass extends BaseClass implements BaseInterface {
 	protected boolean protectedBoolean;
 	Object defaultObject;
 	public static Object o = new Object();
+	private static final String staticFinalField = "staticFinalField";
 
 	public ConcreteClass(int i) {
 		this.publicInt = i;

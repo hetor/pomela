@@ -12,6 +12,8 @@ PRE_IP=(7 binjiang-haitao5 binjiang-haitao13 106.2.33.38 106.2.33.4 hzaxs-haitao
 ONLINE_HAITAO_IP=(9 binjiang-haitao1 binjiang-haitao2 hzabj-haitao-haitao1 hzabj-haitao-haitao2 hzaxs-haitao-haitao1 hzaxs-haitao-haitao2 classa-haitao1 classa-haitao2 classa-haitao11)
 ONLINE_PAY_IP=(4 hzabj-haitao-pay1 hzabj-haitao-pay2 hzaxs-haitao-pay1 hzaxs-haitao-pay2)
 ONLINE_DW_IP=(2 classa-haitao24 classa-haitao25)
+ONLINE_COMMENT_IP=(2 hzaxs-haitao-comment3 hzaxs-haitao-comment4)
+ONLINE_POF_IP=(2 hzayq-haitao-pay-offline1 hzayq-haitao-pay-offline2)
 ONLINE_PRE_IP=(2 hzaxs-haitao-pre5 hzaxs-haitao-pre6)
 DDB_IP=(1 hzbxs-haitao33)
 
@@ -49,6 +51,16 @@ function ssh_online_pay() {
 function ssh_online_dw() {
     echo "log-- ssh ${ONLINE_DW_IP[${1}]}"
     test ${#ONLINE_DW_IP[@]} -gt ${1} && ssh ${ONLINE_DW_IP[${1}]}
+}
+
+function ssh_online_comment() {
+    echo "log-- ssh ${ONLINE_COMMENT_IP[${1}]}"
+    test ${#ONLINE_COMMENT_IP[@]} -gt ${1} && ssh ${ONLINE_COMMENT_IP[${1}]}
+}
+
+function ssh_online_pof() {
+    echo "log-- ssh ${ONLINE_POF_IP[${1}]}"
+    test ${#ONLINE_POF_IP[@]} -gt ${1} && ssh ${ONLINE_POF_IP[${1}]}
 }
 
 function ssh_online_ddb() {
@@ -104,6 +116,10 @@ do
                 MODULE='pay'
             elif [ "${2}" == "dw" ] || [ "${2}" == "haitao-dw" ]; then
                 MODULE='dw'
+            elif [ "${2}" == "comm" ] || [ "${2}" == "comment" ]; then
+                MODULE='comment'
+            elif [ "${2}" == "pof" ] || [ "${2}" == "offline" ]; then
+                MODULE='pof'
             elif [ "${2}" == "ddb" ] || [ "${2}" == "DDB" ]; then
                 MODULE='ddb'
 	    elif [ "${2}" == "pre" ] || [ "${2}" == "PRE" ]; then

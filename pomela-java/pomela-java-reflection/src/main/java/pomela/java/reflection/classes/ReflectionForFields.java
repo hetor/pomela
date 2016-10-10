@@ -96,11 +96,32 @@ public class ReflectionForFields {
 		}
 	}
 
+	/**
+	 * 不能set final变量,为什么?
+	 */
+	public static void setStaticFinalFiledValue() {
+		try {
+			Field privateField = Class.forName("pomela.java.reflection.classes.ConcreteClass").getDeclaredField("staticFinalField");
+			privateField.setAccessible(true);
+			ConcreteClass objTest = new ConcreteClass(1);
+			System.out.println(privateField.get(objTest)); // prints "private string"
+			privateField.set(objTest, "modified");
+			System.out.println(privateField.get(objTest)); //prints "private string updated"
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
-		getPublicField();
-		getFieldDeclaringClass();
-		getFieldType();
-		getSetPublicFieldValue();
-		getSetPrivateFieldValue();
+//		getPublicField();
+//		getFieldDeclaringClass();
+//		getFieldType();
+//		getSetPublicFieldValue();
+//		getSetPrivateFieldValue();
+		setStaticFinalFiledValue();
 	}
 }

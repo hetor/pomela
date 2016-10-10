@@ -1,4 +1,4 @@
-package org.pomela.common.base.signature;
+package org.pomela.common.base.encrypt;
 
 /**
  * Created by hetor on 16/8/18.

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Implementation-Title: pomela-springmvc-test
 Implementation-Version: unspecified
 Built-By: hetor
-Built-JDK: 1.8.0_20
+Built-JDK: 1.7.0_71
 Built-Host: hetor-mac.local
-Implementation-Timestamp: 2016-07-25T23:50:47+0800
+Implementation-Timestamp: 2016-10-10T22:47:36+0800
 
