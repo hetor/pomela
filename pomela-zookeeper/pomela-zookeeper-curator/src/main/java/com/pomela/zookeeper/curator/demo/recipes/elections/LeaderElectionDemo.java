@@ -44,29 +44,49 @@ import com.pomela.zookeeper.curator.core.TopsCuratorFramework;
  * http://curator.apache.org/curator-recipes/leader-election.html
  */
 public class LeaderElectionDemo {
+
 	public static void main(String[] args) throws Exception {
 		//@see curator-examples
 
-		String path = "/curator_recipes_master_path";
+		final String path = "/curator_recipes_master_path";
 
-		LeaderSelectorListener listener = new LeaderSelectorListenerAdapter() {
-			public void takeLeadership(CuratorFramework client) throws Exception {
-				// this callback will get called when you are the leader
-				// do whatever leader work you need to and only exit
-				// this method when you want to relinquish leadership
-				RPIDLogger.info("I get Master, start to do task");
-				Thread.sleep(3000);
-				RPIDLogger.info("task is done, release Master");
-			}
-		};
+		for(int i=0; i<5; i++) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					LeaderSelectorListener listener = new LeaderSelectorListenerAdapter() {
+						public void takeLeadership(CuratorFramework client) throws Exception {
+							// this callback will get called when you are the leader
+							// do whatever leader work you need to and only exit
+							// this method when you want to relinquish leadership
+							RPIDLogger.info(Thread.currentThread().getName() +": I get Master, start to do task");
+							while(true) {
+								Thread.sleep(3000);
+								RPIDLogger.info(Thread.currentThread().getName() +": doing job");
+							}
+//				RPIDLogger.info("task is done, release Master");
+						}
+					};
 
-		LeaderSelector selector = new LeaderSelector(TopsCuratorFramework.getInstance().getCuratorFramework(), path,
-				listener);
-		selector.autoRequeue(); // not required, but this is behavior that you
-								// will probably expect
-		selector.start();
+					LeaderSelector selector = null;
+					try {
+						selector = new LeaderSelector(TopsCuratorFramework.getInstance().getCuratorFramework(), path,
+								listener);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					selector.autoRequeue(); // not required, but this is behavior that you
+					// will probably expect
+					selector.start();
+				}
+			}, "LEADER-" + i).start();
+		}
 
-		Thread.sleep(Integer.MAX_VALUE);
-		selector.close();
+
+		while(true) {
+			Thread.sleep(Integer.MAX_VALUE);
+		}
+
+//		selector.close();
 	}
 }

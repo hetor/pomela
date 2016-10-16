@@ -118,7 +118,8 @@ public class TopsCuratorFramework {
 //		connectionString = connectionString.trim();
 		//192.168.1.117:2181,192.168.1.118:2181,192.168.1.119:2181
 		//10.240.139.162:2181,10.240.137.153:2181,10.240.139.113:2181
-		String connectionString = "192.168.1.117:2181,192.168.1.118:2181,192.168.1.119:2181";
+//		String connectionString = "192.168.1.117:2181,192.168.1.118:2181,192.168.1.119:2181";
+		String connectionString = "10.240.178.50:2181,10.240.181.240:2181,10.240.178.237:2181";
 		try {
 			RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
 

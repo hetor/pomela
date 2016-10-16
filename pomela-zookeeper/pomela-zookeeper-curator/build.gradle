@@ -1,9 +1,23 @@
 dependencies{
-    compile libraries.zookeeper
-    compile libraries.curator_framework
+    configurations {
+        compile.exclude module: 'commons'
+        all*.exclude group: 'log4j', module: 'log4j'
+    }
+
+    compile (libraries.zookeeper) {
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'log4j', module: 'log4j'
+    }
+    compile (libraries.curator_framework) {
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+        exclude group: 'org.apache.zookeeper', module: 'zookeeper'
+    }
     compile libraries.curator_client
     compile libraries.curator_recipes
-    compile libraries.curator_examples
+    compile (libraries.curator_examples) {
+        exclude group: 'org.apache.zookeeper', module: 'zookeeper'
+    }
 
     compile project(':pomela-common:pomela-common-logger')
 }
